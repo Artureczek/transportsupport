@@ -1,5 +1,3 @@
-package main;
-
 public class CreateUserMethods {
 
 	private String name;

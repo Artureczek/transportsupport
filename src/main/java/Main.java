@@ -1,5 +1,3 @@
-package main;
-	
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -17,34 +15,34 @@ public class Main extends Application {
 	 public static Stage mainStage;
 	 
 	 public static final String LOGIN = "login";
-	 public static final String LOGIN_FXML = "/main/fxmlCR/fxml_LogIn.fxml"; 
+	 public static final String LOGIN_FXML = "/src/main/fxmlCR/fxml_LogIn.fxml"; 
 		
 	 public static final String MAINSCREEN = "main";
-	 public static final String MAINSCREEN_FXML = "/main/fxmlCR/fxml_MainScreen.fxml"; 
+	 public static final String MAINSCREEN_FXML = "/src/main/fxmlCR/fxml_MainScreen.fxml"; 
 	
 	 public static final String CREATEUSER = "create";
-	 public static final String CREATEUSER_FXML = "/main/fxmlCR/fxml_CreateUser.fxml"; 
+	 public static final String CREATEUSER_FXML = "/src/main/fxmlCR/fxml_CreateUser.fxml"; 
 	
 	 public static final String EMPLOYMENU = "employ";
-	 public static final String EMPLOYMENU_FXML = "/main/fxmlCR/fxml_EmployMenu.fxml"; 
+	 public static final String EMPLOYMENU_FXML = "/src/main/fxmlCR/fxml_EmployMenu.fxml"; 
 	 
 	 public static final String ADDEMPLOYEE = "addemploy";
-	 public static final String ADDEMPLOYEE_FXML = "/main/fxmlCR/fxml_AddEmployeeScreen.fxml"; 
+	 public static final String ADDEMPLOYEE_FXML = "/src/main/fxmlCR/fxml_AddEmployeeScreen.fxml"; 
 	 
 	 public static final String EMPLOYEEPARTA = "partA";
-	 public static final String EMPLOYEEPARTA_FXML = "/main/fxmlCR/fxml_PartA.fxml"; 
+	 public static final String EMPLOYEEPARTA_FXML = "/src/main/fxmlCR/fxml_PartA.fxml"; 
 	 
 	 public static final String EMPLOYEEPARTB = "partB";
-	 public static final String EMPLOYEEPARTB_FXML = "/main/fxmlCR/fxml_PartB.fxml"; 
+	 public static final String EMPLOYEEPARTB_FXML = "/src/main/fxmlCR/fxml_PartB.fxml"; 
 	 
 	 public static final String EMPLOYEEPARTC = "partC";
-	 public static final String EMPLOYEEPARTC_FXML = "/main/fxmlCR/fxml_PartC.fxml"; 
+	 public static final String EMPLOYEEPARTC_FXML = "/src/main/fxmlCR/fxml_PartC.fxml"; 
 	 
 	 public static final String ADDCAR = "addcar";
-	 public static final String ADDCAR_FXML = "/main/fxmlCR/fxml_AddCarScreen.fxml";
+	 public static final String ADDCAR_FXML = "/src/main/fxmlCR/fxml_AddCarScreen.fxml";
 
 	 public static final String ROUTEMENU = "route";
-	 public static final String ROUTEMENU_FXML = "/main/fxmlCR/fxml_RouteMenu.fxml";
+	 public static final String ROUTEMENU_FXML = "/src/main/fxmlCR/fxml_RouteMenu.fxml";
 
 
 

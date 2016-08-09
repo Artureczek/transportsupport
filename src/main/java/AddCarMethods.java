@@ -1,5 +1,3 @@
-package main;
-
 public class AddCarMethods {
 
 	public String marka;
