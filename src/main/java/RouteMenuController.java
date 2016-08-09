@@ -37,7 +37,14 @@ public class RouteMenuController implements Initializable, ControlledScreen{
 
 
 
-
+        newRouteBttn.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent arg0)
+            {
+                myController.setScreen(Main.SELECTROUTE);
+            }
+        });
 
 
 

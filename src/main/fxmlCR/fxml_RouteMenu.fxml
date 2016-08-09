@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.RouteMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RouteMenuController">
    <children>
       <Button fx:id="newRouteBttn" layoutX="151.0" layoutY="209.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Dalej" />
       <Label fx:id="newRouteLbl" layoutX="102.0" layoutY="161.0" prefHeight="27.0" prefWidth="227.0" text="Wyznacz nowa trase">

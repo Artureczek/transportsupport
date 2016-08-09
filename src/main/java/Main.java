@@ -15,34 +15,37 @@ public class Main extends Application {
 	 public static Stage mainStage;
 	 
 	 public static final String LOGIN = "login";
-	 public static final String LOGIN_FXML = "/src/main/fxmlCR/fxml_LogIn.fxml"; 
+	 public static final String LOGIN_FXML = "/fxmlCR/fxml_LogIn.fxml"; 
 		
 	 public static final String MAINSCREEN = "main";
-	 public static final String MAINSCREEN_FXML = "/src/main/fxmlCR/fxml_MainScreen.fxml"; 
+	 public static final String MAINSCREEN_FXML = "/fxmlCR/fxml_MainScreen.fxml"; 
 	
 	 public static final String CREATEUSER = "create";
-	 public static final String CREATEUSER_FXML = "/src/main/fxmlCR/fxml_CreateUser.fxml"; 
+	 public static final String CREATEUSER_FXML = "/fxmlCR/fxml_CreateUser.fxml"; 
 	
 	 public static final String EMPLOYMENU = "employ";
-	 public static final String EMPLOYMENU_FXML = "/src/main/fxmlCR/fxml_EmployMenu.fxml"; 
+	 public static final String EMPLOYMENU_FXML = "/fxmlCR/fxml_EmployMenu.fxml"; 
 	 
 	 public static final String ADDEMPLOYEE = "addemploy";
-	 public static final String ADDEMPLOYEE_FXML = "/src/main/fxmlCR/fxml_AddEmployeeScreen.fxml"; 
+	 public static final String ADDEMPLOYEE_FXML = "/fxmlCR/fxml_AddEmployeeScreen.fxml"; 
 	 
 	 public static final String EMPLOYEEPARTA = "partA";
-	 public static final String EMPLOYEEPARTA_FXML = "/src/main/fxmlCR/fxml_PartA.fxml"; 
+	 public static final String EMPLOYEEPARTA_FXML = "/fxmlCR/fxml_PartA.fxml"; 
 	 
 	 public static final String EMPLOYEEPARTB = "partB";
-	 public static final String EMPLOYEEPARTB_FXML = "/src/main/fxmlCR/fxml_PartB.fxml"; 
+	 public static final String EMPLOYEEPARTB_FXML = "/fxmlCR/fxml_PartB.fxml"; 
 	 
 	 public static final String EMPLOYEEPARTC = "partC";
-	 public static final String EMPLOYEEPARTC_FXML = "/src/main/fxmlCR/fxml_PartC.fxml"; 
+	 public static final String EMPLOYEEPARTC_FXML = "/fxmlCR/fxml_PartC.fxml"; 
 	 
 	 public static final String ADDCAR = "addcar";
-	 public static final String ADDCAR_FXML = "/src/main/fxmlCR/fxml_AddCarScreen.fxml";
+	 public static final String ADDCAR_FXML = "/fxmlCR/fxml_AddCarScreen.fxml";
 
 	 public static final String ROUTEMENU = "route";
-	 public static final String ROUTEMENU_FXML = "/src/main/fxmlCR/fxml_RouteMenu.fxml";
+	 public static final String ROUTEMENU_FXML = "/fxmlCR/fxml_RouteMenu.fxml";
+
+	 public static final String SELECTROUTE = "selectroute";
+	 public static final String SELECTROUTE_FXML = "/fxmlCR/fxml_SelectRoute.fxml";
 
 
 
@@ -58,7 +61,8 @@ public class Main extends Application {
 		    mainContainer.loadScreen(Main.MAINSCREEN, Main.MAINSCREEN_FXML);
 		    mainContainer.loadScreen(Main.CREATEUSER, Main.CREATEUSER_FXML);
 		    mainContainer.loadScreen(Main.EMPLOYMENU, Main.EMPLOYMENU_FXML);
-			mainContainer.loadScreen(Main.ROUTEMENU, Main.ROUTEMENU_FXML);
+			mainContainer.loadScreen(Main.ROUTEMENU, Main.ROUTEMENU_FXML);;
+			mainContainer.loadScreen(Main.SELECTROUTE, Main.SELECTROUTE_FXML);
 		    mainContainer.loadScreen(Main.ADDEMPLOYEE, Main.ADDEMPLOYEE_FXML);
 		    mainContainer.loadScreen(Main.EMPLOYEEPARTA, Main.EMPLOYEEPARTA_FXML);
 		    mainContainer.loadScreen(Main.EMPLOYEEPARTB, Main.EMPLOYEEPARTB_FXML);
@@ -72,7 +76,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 			
 			primaryStage.setScene(scene);
-			primaryStage.getScene().getStylesheets().add(getClass().getResource("fxmlCR/application.css").toExternalForm());
+			primaryStage.getScene().getStylesheets().add(getClass().getResource("/fxmlCR/application.css").toExternalForm());
 			primaryStage.show(); 
 					
 			mystage = primaryStage;
