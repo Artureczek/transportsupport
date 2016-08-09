@@ -15,7 +15,7 @@ public class Main extends Application {
 	 public static Stage mainStage;
 	 
 	 public static final String LOGIN = "login";
-	 public static final String LOGIN_FXML = "/fxmlCR/fxml_LogIn.fxml"; 
+	 public static final String LOGIN_FXML = "/fxmlCR/fxml_LogIn.fxml";
 		
 	 public static final String MAINSCREEN = "main";
 	 public static final String MAINSCREEN_FXML = "/fxmlCR/fxml_MainScreen.fxml"; 
