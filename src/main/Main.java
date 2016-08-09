@@ -1,12 +1,9 @@
 package main;
 	
-import main.ScreensController;
 import javafx.application.Application;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 
 
@@ -44,9 +41,14 @@ public class Main extends Application {
 	 public static final String EMPLOYEEPARTC_FXML = "/main/fxmlCR/fxml_PartC.fxml"; 
 	 
 	 public static final String ADDCAR = "addcar";
-	 public static final String ADDCAR_FXML = "/main/fxmlCR/fxml_AddCarScreen.fxml"; 
-	
-    @Override
+	 public static final String ADDCAR_FXML = "/main/fxmlCR/fxml_AddCarScreen.fxml";
+
+	 public static final String ROUTEMENU = "route";
+	 public static final String ROUTEMENU_FXML = "/main/fxmlCR/fxml_RouteMenu.fxml";
+
+
+
+	@Override
 	public void start(Stage primaryStage) {
 		try {
 			
@@ -58,6 +60,7 @@ public class Main extends Application {
 		    mainContainer.loadScreen(Main.MAINSCREEN, Main.MAINSCREEN_FXML);
 		    mainContainer.loadScreen(Main.CREATEUSER, Main.CREATEUSER_FXML);
 		    mainContainer.loadScreen(Main.EMPLOYMENU, Main.EMPLOYMENU_FXML);
+			mainContainer.loadScreen(Main.ROUTEMENU, Main.ROUTEMENU_FXML);
 		    mainContainer.loadScreen(Main.ADDEMPLOYEE, Main.ADDEMPLOYEE_FXML);
 		    mainContainer.loadScreen(Main.EMPLOYEEPARTA, Main.EMPLOYEEPARTA_FXML);
 		    mainContainer.loadScreen(Main.EMPLOYEEPARTB, Main.EMPLOYEEPARTB_FXML);
