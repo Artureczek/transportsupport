@@ -1,25 +1,36 @@
+import com.mkyong.transport.PRACOWNIK;
+import com.mkyong.util.HibernateUtil;
+import org.hibernate.Session;
+
 public class AddEmployeeMethods {
 
 	
-	public String name;
-	public String surname;
-	public String salary;
-	public String pesel;
-	public String birthDate;
-	
-	
-	public AddEmployeeMethods(String _name, String _surname, String _salary, String _pesel, String _birthDate)
-	{
-		this.name = _name;
-		this.surname = _surname;
-		this.salary = _salary;
-		this.pesel = _pesel;
-		this.birthDate = _birthDate;
-	}
-	
-	
-	public boolean Validate(){
-		return true;
+	public static boolean Validate(PRACOWNIK pracownik){
+
+		boolean result = false;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		if(result) {
+
+			try
+			{
+				session.beginTransaction();
+				session.save(pracownik);
+				session.getTransaction().commit();
+
+			} catch (Exception e)
+			{
+				result = false;
+				e.printStackTrace();
+			}
+			finally
+			{
+				session.close();
+			}
+		}
+
+
+		return result;
 	}
 	
 	

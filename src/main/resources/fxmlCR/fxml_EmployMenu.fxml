@@ -9,32 +9,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmployMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmployMenuController">
    <children>
-      <Label fx:id="addEmplLabel" layoutX="135.0" layoutY="121.0" prefHeight="17.0" prefWidth="172.0" text="Dodaj Pracownika">
+      <Label fx:id="addEmplLabel" layoutX="221.0" layoutY="121.0" prefHeight="31.0" prefWidth="251.0" text="Dodaj Pracownika">
          <font>
-            <Font size="19.0" />
+            <Font size="21.0" />
          </font>
       </Label>
-      <Label fx:id="viewEmplLabel" layoutX="380.0" layoutY="121.0" prefHeight="28.0" prefWidth="251.0" text="Przegladaj Pracownikow">
+      <Label fx:id="viewEmplLabel" layoutX="689.0" layoutY="121.0" prefHeight="28.0" prefWidth="251.0" text="Przegladaj Pracownikow">
          <font>
-            <Font size="19.0" />
+            <Font size="21.0" />
          </font>
       </Label>
-      <Button fx:id="addEmplBttn" layoutX="173.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
-      <Button fx:id="viewEmplBttn" layoutX="441.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
-      <Button fx:id="addCarBttn" layoutX="173.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
-      <Button fx:id="viewCarBttn" layoutX="441.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
-      <Label fx:id="addCarLabel" layoutX="155.0" layoutY="292.0" prefHeight="28.0" prefWidth="163.0" text="Dodaj Pojazd">
+      <Button fx:id="addEmplBttn" layoutX="267.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
+      <Button fx:id="viewEmplBttn" layoutX="749.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
+      <Button fx:id="addCarBttn" layoutX="270.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
+      <Button fx:id="viewCarBttn" layoutX="749.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="OK" />
+      <Label fx:id="addCarLabel" layoutX="247.0" layoutY="286.0" prefHeight="28.0" prefWidth="163.0" text="Dodaj Pojazd">
          <font>
-            <Font size="19.0" />
+            <Font size="21.0" />
          </font>
       </Label>
-      <Label fx:id="viewCarLabel" layoutX="399.0" layoutY="292.0" prefHeight="28.0" prefWidth="213.0" text="Przegladaj Pojazdy">
+      <Label fx:id="viewCarLabel" layoutX="708.0" layoutY="286.0" prefHeight="28.0" prefWidth="213.0" text="Przegladaj Pojazdy">
          <font>
-            <Font size="19.0" />
+            <Font size="21.0" />
          </font>
       </Label>
-      <Button fx:id="backBttn" layoutX="304.0" layoutY="421.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Wroc" />
+      <Button fx:id="backBttn" layoutX="521.0" layoutY="484.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Wroc" />
    </children>
 </AnchorPane>

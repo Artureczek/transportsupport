@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmployeePartCController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmployeePartCController">
    <children>
-      <Label fx:id="umowaLabel" layoutX="178.0" layoutY="70.0" text="Dodaj Skan Oswiadczenia o wypowiedzeniu lub rozwiazaniu umowy o prace" />
-      <Label fx:id="swiadectwoPracyLabel" layoutX="279.0" layoutY="140.0" text="Dodaj Skan Kopii Swiadectwa Pracy" />
-      <Label fx:id="czynnoscLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="222.0" prefHeight="48.0" prefWidth="457.0" text="Dodaj Skan Potwierdzenia Dokonania Czynnosci, Ktore Zwiazane Sa Z Zajeciem Wynagrodzenia Za Prace W Zwiazku Z Prowadzonym Postepowaniem Egzekucyjnym" wrapText="true" />
-      <Label fx:id="konkurencjaLabel" layoutX="185.0" layoutY="341.0" text="Dodaj Skan Umowy O Zakazie Konkurencji Po Rozwiazaniu Stosnku Pracy" />
-      <Label fx:id="orzeczenieLekarskieLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="416.0" prefHeight="48.0" prefWidth="417.0" text="Dodaj Skan Orzeczenia Lekarskiego Wydanego W Zwiazku Z Przeprowadzonymi Badaniami Okresowymi Po Rozwiazaniu Stosunku Pracy" wrapText="true" />
-      <Button fx:id="umowaButton" layoutX="343.0" layoutY="87.0" mnemonicParsing="false" text="Wybierz" />
-      <Button fx:id="swiadectwoPracyButton" layoutX="343.0" layoutY="157.0" mnemonicParsing="false" text="Wybierz" />
-      <Button fx:id="czynnoscButton" layoutX="343.0" layoutY="264.0" mnemonicParsing="false" text="Wybierz" />
-      <Button fx:id="konkurencjaButton" layoutX="343.0" layoutY="358.0" mnemonicParsing="false" text="Wybierz" />
-      <Button fx:id="orzecznieLekarskieButton" layoutX="343.0" layoutY="471.0" mnemonicParsing="false" text="Wybierz" />
-      <Button fx:id="finishButton" layoutX="615.0" layoutY="561.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Zakoncz" />
-      <Button fx:id="backButton" layoutX="60.0" layoutY="561.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Cofnij" />
-      <Label fx:id="titleLabel" layoutX="202.0" layoutY="20.0" text="TECZKA PRACOWNIKA - CZESC C" textFill="#4435eb">
+      <Label fx:id="umowaLabel" layoutX="357.0" layoutY="73.0" text="Dodaj Skan Oswiadczenia o wypowiedzeniu lub rozwiazaniu umowy o prace" />
+      <Label fx:id="swiadectwoPracyLabel" layoutX="458.0" layoutY="143.0" text="Dodaj Skan Kopii Swiadectwa Pracy" />
+      <Label fx:id="czynnoscLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="329.0" layoutY="225.0" prefHeight="48.0" prefWidth="457.0" text="Dodaj Skan Potwierdzenia Dokonania Czynnosci, Ktore Zwiazane Sa Z Zajeciem Wynagrodzenia Za Prace W Zwiazku Z Prowadzonym Postepowaniem Egzekucyjnym" wrapText="true" />
+      <Label fx:id="konkurencjaLabel" layoutX="364.0" layoutY="344.0" text="Dodaj Skan Umowy O Zakazie Konkurencji Po Rozwiazaniu Stosnku Pracy" />
+      <Label fx:id="orzeczenieLekarskieLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="349.0" layoutY="419.0" prefHeight="48.0" prefWidth="417.0" text="Dodaj Skan Orzeczenia Lekarskiego Wydanego W Zwiazku Z Przeprowadzonymi Badaniami Okresowymi Po Rozwiazaniu Stosunku Pracy" wrapText="true" />
+      <Button fx:id="umowaButton" layoutX="522.0" layoutY="90.0" mnemonicParsing="false" text="Wybierz" />
+      <Button fx:id="swiadectwoPracyButton" layoutX="522.0" layoutY="160.0" mnemonicParsing="false" text="Wybierz" />
+      <Button fx:id="czynnoscButton" layoutX="522.0" layoutY="267.0" mnemonicParsing="false" text="Wybierz" />
+      <Button fx:id="konkurencjaButton" layoutX="522.0" layoutY="361.0" mnemonicParsing="false" text="Wybierz" />
+      <Button fx:id="orzecznieLekarskieButton" layoutX="522.0" layoutY="474.0" mnemonicParsing="false" text="Wybierz" />
+      <Button fx:id="finishButton" layoutX="992.0" layoutY="549.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Zakoncz" />
+      <Button fx:id="backButton" layoutX="63.0" layoutY="549.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Cofnij" />
+      <Label fx:id="titleLabel" layoutX="381.0" layoutY="23.0" text="TECZKA PRACOWNIKA - CZESC C" textFill="#4435eb">
          <font>
             <Font size="23.0" />
          </font>

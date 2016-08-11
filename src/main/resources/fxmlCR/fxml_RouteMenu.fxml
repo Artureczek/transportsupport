@@ -9,20 +9,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RouteMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RouteMenuController">
    <children>
-      <Button fx:id="newRouteBttn" layoutX="151.0" layoutY="209.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Dalej" />
-      <Label fx:id="newRouteLbl" layoutX="102.0" layoutY="161.0" prefHeight="27.0" prefWidth="227.0" text="Wyznacz nowa trase">
+      <Button fx:id="newRouteBttn" layoutX="237.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Dalej" />
+      <Label fx:id="newRouteLbl" layoutX="188.0" layoutY="175.0" prefHeight="27.0" prefWidth="227.0" text="Wyznacz nowa trase">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="viewRoutesLbl" layoutX="406.0" layoutY="161.0" prefHeight="27.0" prefWidth="208.0" text="Przegladaj odbyte trasy">
+      <Label fx:id="viewRoutesLbl" layoutX="710.0" layoutY="175.0" prefHeight="27.0" prefWidth="208.0" text="Przegladaj odbyte trasy">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="viewRoutesBttn" layoutX="459.0" layoutY="209.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Dalej" />
-      <Button fx:id="backBttn" layoutX="301.0" layoutY="400.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Wroc" />
+      <Button fx:id="viewRoutesBttn" layoutX="770.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Dalej" />
+      <Button fx:id="backBttn" layoutX="518.0" layoutY="491.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Wroc" />
    </children>
 </AnchorPane>

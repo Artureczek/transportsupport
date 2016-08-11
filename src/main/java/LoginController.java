@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -11,34 +12,34 @@ import java.util.ResourceBundle;
 
 public class LoginController  implements Initializable, ControlledScreen{
 
-	ScreensController myController; 
-	
-	  @FXML
-	    private Button logButton;
+	ScreensController myController;
 
-	    @FXML
-	    private Button createButton;
+	@FXML
+	private Label incorrectLabel;
 
-	    @FXML
-	    private TextField nameTxtField;
+	@FXML
+	private PasswordField passTxtField;
 
-	    @FXML
-	    private TextField passTxtField;
+	@FXML
+	private Label headLabel;
 
-	    @FXML
-	    private Label nameLabel;
+	@FXML
+	private Label noAccLabel;
 
-	    @FXML
-	    private Label passLabel;
+	@FXML
+	private Button createButton;
 
-	    @FXML
-	    private Label noAccLabel;
+	@FXML
+	private Label passLabel;
 
-	    @FXML
-	    private Label headLabel;
-	    
-	    @FXML
-	    private Label incorrectLabel;
+	@FXML
+	private TextField nameTxtField;
+
+	@FXML
+	private Button logButton;
+
+	@FXML
+	private Label nameLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -50,14 +51,18 @@ public class LoginController  implements Initializable, ControlledScreen{
 	        @Override
 	        public void handle(ActionEvent arg0) 
 	        {
-	        	 LoginMethods log = new LoginMethods(nameTxtField.getText(), passTxtField.getText());
-	        	 if(log.validate())
+
+
+	        	//LoginMethods log = new LoginMethods(nameTxtField.getText(), passTxtField.getText());
+	        	 if(LoginMethods.validate(nameTxtField.getText(), passTxtField.getText()))
 	        		 myController.setScreen(Main.MAINSCREEN); 	 
 	        	 else 
 	        		 incorrectLabel.setVisible(true);
-	        		 
-	        	       	        		        	
-	        }
+
+				System.out.println(Main.activeUser);
+
+
+			}
 	    });
 		
 		

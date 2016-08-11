@@ -1,29 +1,47 @@
+import com.mkyong.transport.APPUSER;
+import com.mkyong.util.HibernateUtil;
+import org.hibernate.Session;
+
 public class CreateUserMethods {
 
-	private String name;
-	private String surname;
-	private String email;
-	private String username;
-	private String password;
-	private String repeatedPassword;
-	
-	
-	public CreateUserMethods(String _name, String _surname, String _email, String _username, String _password, String _repeatedPassword)
-	{
-		this.name = _name;
-		this.surname = _surname;
-		this.email = _email;
-		this.username = _username;
-		this.password = _password;
-		this.repeatedPassword = _repeatedPassword;
-	}
-	
-	public boolean Validate(){
 
-		return true;
-		
+	private static boolean validate(APPUSER user, String repeat)
+	{
+		if(user.getHaslo().equals(repeat))
+			return true;
+		else
+			return false;
 	}
-	
+
+
+	public static boolean createUser(APPUSER user, String repeat)
+	{
+
+		boolean result = validate(user, repeat);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		if(result) {
+
+			try
+			{
+				session.beginTransaction();
+				session.save(user);
+				session.getTransaction().commit();
+
+			} catch (Exception e)
+			{
+				result = false;
+				e.printStackTrace();
+			}
+			finally
+			{
+				session.close();
+			}
+		}
+
+
+		return result;
+	}
 	
 	
 	

@@ -1,63 +1,67 @@
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import com.mkyong.transport.APPUSER;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class CreateUserController implements Initializable, ControlledScreen {
 
-	ScreensController myController; 
-	
-	
-    @FXML
-    private Label nameLabel;
+	ScreensController myController;
 
-    @FXML
-    private Label surnameLabel;
+	@FXML
+	private TextField mailTextField;
 
-    @FXML
-    private Label mailLabel;
+	@FXML
+	private Label repeatPassLabel;
 
-    @FXML
-    private Label usernameLabel;
+	@FXML
+	private Label surnameLabel;
 
-    @FXML
-    private Label passLabel;
+	@FXML
+	private TextField nameTextField;
 
-    @FXML
-    private TextField nameTextField;
+	@FXML
+	private Label passLabel;
 
-    @FXML
-    private TextField surnameTextField;
+	@FXML
+	private Label usernameLabel;
 
-    @FXML
-    private TextField mailTextField;
+	@FXML
+	private PasswordField passTextField;
 
-    @FXML
-    private TextField usernameTextField;
+	@FXML
+	private TextField surnameTextField;
 
-    @FXML
-    private TextField passTextField;
+	@FXML
+	private Label correctLabel;
 
-    @FXML
-    private Button backButton;
+	@FXML
+	private Label mailLabel;
 
-    @FXML
-    private Button createButton;
+	@FXML
+	private Label incorrectTextField;
 
-    @FXML
-    private Label repeatPassLabel;
+	@FXML
+	private Button backButton;
 
-    @FXML
-    private TextField repeatPassTextField;
-    
-    @FXML
-    private Label incorrectTextField;
+	@FXML
+	private Button createButton;
+
+	@FXML
+	private Label nameLabel;
+
+	@FXML
+	private TextField usernameTextField;
+
+	@FXML
+	private PasswordField repeatPassTextField;
 
 	
 
@@ -78,13 +82,21 @@ public class CreateUserController implements Initializable, ControlledScreen {
 	        @Override
 	        public void handle(ActionEvent arg0) 
 	        {
-	        	 CreateUserMethods CUM = new CreateUserMethods(nameTextField.getText(), surnameTextField.getText(),
-	        	 mailTextField.getText(), usernameTextField.getText(), passTextField.getText(), repeatPassTextField.getText());
-	        	
-	        	 if(CUM.Validate())
-	        	 myController.setScreen(Main.MAINSCREEN); 
-	        	 else
-	        	 incorrectTextField.setVisible(true);
+
+	        	APPUSER user = new APPUSER();
+				user.setimie(nameTextField.getText());
+				user.setnazwaUzytkownika(usernameTextField.getText());
+				user.setnazwisko(surnameTextField.getText());
+				user.setEmail(mailTextField.getText());
+				user.setHaslo(passTextField.getText());
+
+				boolean result = CreateUserMethods.createUser(user, repeatPassTextField.getText());
+
+
+				if(result)
+					correctLabel.setVisible(true);
+	        	else
+	        		incorrectTextField.setVisible(true);
 	        }
 	    });
 		

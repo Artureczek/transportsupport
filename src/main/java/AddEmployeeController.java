@@ -1,14 +1,18 @@
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.fxml.Initializable;
+import com.mkyong.transport.PRACOWNIK;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import java.net.URL;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 public class AddEmployeeController implements Initializable, ControlledScreen{
 
@@ -66,10 +70,14 @@ public class AddEmployeeController implements Initializable, ControlledScreen{
 	        @Override
 	        public void handle(ActionEvent arg0) 
 	        {
-	        	 AddEmployeeMethods aem = new AddEmployeeMethods(nameTextField.getText(), surnameTextField.getText(), 
-	        			 salaryTextField.getText(), peselTextField.getText(), birthDatePicker.getPromptText());
+	        	Instant instant = Instant.from(birthDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
+				Date date = Date.from(instant);
+				PRACOWNIK pracownik = new PRACOWNIK(nameTextField.getText(), surnameTextField.getText(), peselTextField.getText(),
+						Float.valueOf(salaryTextField.getText()), /*date,*/ Main.activeUser);
+
+				 boolean result = AddEmployeeMethods.Validate(pracownik);
 	        	 
-	        	 if(aem.Validate())
+	        	 if(result)
 	        	 myController.setScreen(Main.EMPLOYEEPARTA); 
 	        	 else
 	        	 incorrectLabel.setVisible(true);
