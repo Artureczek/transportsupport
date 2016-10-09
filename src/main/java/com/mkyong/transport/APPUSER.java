@@ -8,8 +8,8 @@ import javax.persistence.*;
 public class APPUSER implements java.io.Serializable {
 
     @Id
-    @SequenceGenerator(name="APPUSER_SEQ1", sequenceName="APPUSER_SEQ1", allocationSize=1)
-    @GeneratedValue (strategy = GenerationType.SEQUENCE, generator="APPUSER_SEQ1")
+    @SequenceGenerator(name="APPUSER_SEQ", sequenceName="APPUSER_SEQ", allocationSize=1)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE, generator="APPUSER_SEQ")
     @Column(name = "ID_USER")
     private int appUserId;
 

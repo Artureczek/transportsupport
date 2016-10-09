@@ -1,6 +1,9 @@
+package com.mkyong.controllers;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import com.mkyong.main.*;
+import com.mkyong.controlMethods.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.fxml.Initializable;
 
-public class AddCarController implements Initializable, ControlledScreen{
+public class AddCarController implements Initializable, ControlledScreen {
 
 	ScreensController myController;
 

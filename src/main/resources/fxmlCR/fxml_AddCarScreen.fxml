@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddCarController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mkyong.controllers.AddCarController">
    <children>
       <Label fx:id="markaLabel" layoutX="360.0" layoutY="110.0" prefHeight="17.0" prefWidth="93.0" text="Marka*" />
       <Label fx:id="modelLabel" layoutX="360.0" layoutY="159.0" prefHeight="17.0" prefWidth="93.0" text="Model*" />

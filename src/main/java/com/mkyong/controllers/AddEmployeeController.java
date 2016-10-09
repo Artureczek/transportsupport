@@ -1,3 +1,6 @@
+package com.mkyong.controllers;
+import com.mkyong.main.*;
+import com.mkyong.controlMethods.*;
 import com.mkyong.transport.PRACOWNIK;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +17,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class AddEmployeeController implements Initializable, ControlledScreen{
+public class AddEmployeeController implements Initializable, ControlledScreen {
 
 	ScreensController myController;
 
@@ -73,7 +76,7 @@ public class AddEmployeeController implements Initializable, ControlledScreen{
 	        	Instant instant = Instant.from(birthDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
 				Date date = Date.from(instant);
 				PRACOWNIK pracownik = new PRACOWNIK(nameTextField.getText(), surnameTextField.getText(), peselTextField.getText(),
-						Float.valueOf(salaryTextField.getText()), /*date,*/ Main.activeUser);
+						Float.valueOf(salaryTextField.getText()), date, Main.activeUserEntity);
 
 				 boolean result = AddEmployeeMethods.Validate(pracownik);
 	        	 

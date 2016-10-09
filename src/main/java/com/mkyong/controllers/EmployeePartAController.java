@@ -1,3 +1,5 @@
+package com.mkyong.controllers;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -7,8 +9,9 @@ import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-public class EmployeePartAController implements Initializable, ControlledScreen{
+import com.mkyong.main.*;
+import com.mkyong.controlMethods.*;
+public class EmployeePartAController implements Initializable, ControlledScreen {
 
 	ScreensController myController;
 

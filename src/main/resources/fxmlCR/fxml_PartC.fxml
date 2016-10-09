@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmployeePartCController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mkyong.controllers.EmployeePartCController">
    <children>
       <Label fx:id="umowaLabel" layoutX="357.0" layoutY="73.0" text="Dodaj Skan Oswiadczenia o wypowiedzeniu lub rozwiazaniu umowy o prace" />
       <Label fx:id="swiadectwoPracyLabel" layoutX="458.0" layoutY="143.0" text="Dodaj Skan Kopii Swiadectwa Pracy" />

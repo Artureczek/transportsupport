@@ -1,3 +1,7 @@
+package com.mkyong.main;
+
+import com.mkyong.controllers.ScreensController;
+import com.mkyong.transport.APPUSER;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -7,6 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	 public static int activeUser = -1;
+	 public static APPUSER activeUserEntity = null;
 	 static StackPane root;
 	 static Stage mystage;
 
@@ -45,6 +50,9 @@ public class Main extends Application {
 	 public static final String SELECTROUTE = "selectroute";
 	 public static final String SELECTROUTE_FXML = "/fxmlCR/fxml_SelectRoute.fxml";
 
+	public static final String VIEWWORKERS = "viewworkers";
+	public static final String VIEWWORKERS_FXML = "/fxmlCR/fxml_viewWorkers.fxml";
+
 
 
 	@Override
@@ -66,7 +74,8 @@ public class Main extends Application {
 		    mainContainer.loadScreen(Main.EMPLOYEEPARTB, Main.EMPLOYEEPARTB_FXML);
 		    mainContainer.loadScreen(Main.EMPLOYEEPARTC, Main.EMPLOYEEPARTC_FXML);
 		    mainContainer.loadScreen(Main.ADDCAR, Main.ADDCAR_FXML);
-		    
+			mainContainer.loadScreen(Main.VIEWWORKERS, Main.VIEWWORKERS_FXML);
+
 		    mainContainer.setScreen(Main.LOGIN);
 							
 			root = new StackPane();

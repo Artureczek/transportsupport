@@ -1,3 +1,5 @@
+package com.mkyong.controlMethods;
+
 import com.mkyong.transport.APPUSER;
 import com.mkyong.util.HibernateUtil;
 import org.hibernate.Session;

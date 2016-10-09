@@ -1,3 +1,5 @@
+package com.mkyong.controllers;
+
 import com.mkyong.transport.APPUSER;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +12,8 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import com.mkyong.main.*;
+import com.mkyong.controlMethods.*;
 public class CreateUserController implements Initializable, ControlledScreen {
 
 	ScreensController myController;
@@ -89,6 +92,7 @@ public class CreateUserController implements Initializable, ControlledScreen {
 				user.setnazwisko(surnameTextField.getText());
 				user.setEmail(mailTextField.getText());
 				user.setHaslo(passTextField.getText());
+
 
 				boolean result = CreateUserMethods.createUser(user, repeatPassTextField.getText());
 

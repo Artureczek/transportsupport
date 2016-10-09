@@ -5,11 +5,11 @@
 <hibernate-configuration>
  <session-factory>
   <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-  <property name="hibernate.connection.url">jdbc:Oracle:thin:@localhost:1521/xe</property>
-  <property name="hibernate.connection.username">transport</property>
-  <property name="hibernate.connection.password">transport</property>
+  <property name="hibernate.connection.url">jdbc:Oracle:thin:@localhost:1521:transport</property>
+  <property name="hibernate.connection.username">C##TRANS</property>
+  <property name="hibernate.connection.password">nokia3310</property>
   <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
-  <property name="hibernate.default_schema">transport</property>
+ <!-- <property name="hibernate.default_schema">transport</property>-->
   <property name="show_sql">true</property>
   <mapping class="com.mkyong.transport.APPUSER"/>
   <mapping class="com.mkyong.transport.PRACOWNIK"/>

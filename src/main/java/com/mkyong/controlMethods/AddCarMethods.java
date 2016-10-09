@@ -1,3 +1,5 @@
+package com.mkyong.controlMethods;
+
 public class AddCarMethods {
 
 	public String marka;

@@ -1,3 +1,5 @@
+package com.mkyong.controllers;
+
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.object.*;
@@ -20,7 +22,8 @@ import javafx.scene.layout.BorderPane;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import com.mkyong.main.*;
+import com.mkyong.controlMethods.*;
 /**
  * Created by akielbiewski on 09.08.2016.
  */

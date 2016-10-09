@@ -1,3 +1,5 @@
+package com.mkyong.controllers;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -7,11 +9,12 @@ import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import com.mkyong.main.*;
+import com.mkyong.controlMethods.*;
 /**
  * Created by akielbiewski on 09.08.2016.
  */
-public class RouteMenuController implements Initializable, ControlledScreen{
+public class RouteMenuController implements Initializable, ControlledScreen {
 
 
     ScreensController myController;

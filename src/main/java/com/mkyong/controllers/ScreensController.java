@@ -1,3 +1,5 @@
+package com.mkyong.controllers;
+
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -6,7 +8,8 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.util.HashMap;
-
+import com.mkyong.main.*;
+import com.mkyong.controlMethods.*;
 
 public class ScreensController extends StackPane
 {

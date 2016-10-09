@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmployeePartAController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mkyong.controllers.EmployeePartAController">
    <children>
       <Label fx:id="kwestionariuszLabel" layoutX="456.0" layoutY="70.0" text="Dodaj Skan Kwestionariusza Osobowego" />
       <Label fx:id="swiadectwoLabel" layoutX="486.0" layoutY="142.0" text="Dodaj Skan Swiadectwa Pracy" />

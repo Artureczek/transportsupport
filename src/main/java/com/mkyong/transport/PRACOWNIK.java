@@ -24,18 +24,20 @@ public class PRACOWNIK implements java.io.Serializable {
     private String pesel;
 
     @Column(name = "STAWKA")
-    private float stawka;
+    private Float stawka;
 
     @Column(name = "DATA_URODZENIA")
     private Date dataUrodzenia;
 
-    @Column(name = "ID_USER")
-    private int user;
+
+    @JoinColumn(name = "ID_USER")
+    @ManyToOne
+    private APPUSER user;
 
     public PRACOWNIK() {
     }
 
-    public PRACOWNIK(String imie, String nazwisko, String pesel, float stawka, Date dataurodzenia, int iduser) {
+    public PRACOWNIK(String imie, String nazwisko, String pesel, Float stawka, Date dataurodzenia, APPUSER iduser) {
 
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -77,11 +79,9 @@ public class PRACOWNIK implements java.io.Serializable {
         this.pesel = pesel;
     }
 
-    public float getStawka() {
-        return stawka;
-    }
+    public Float getStawka() { return stawka; }
 
-    public void setStawka(float stawka) {
+    public void setStawka(Float stawka) {
         this.stawka = stawka;
     }
 
@@ -93,11 +93,7 @@ public class PRACOWNIK implements java.io.Serializable {
         this.dataUrodzenia = dataUrodzenia;
     }
 
-    public int getUser() {
-        return user;
-    }
+    public APPUSER getUser() { return user;  }
 
-    public void setUser(int user) {
-        this.user = user;
-    }
+    public void setUser(APPUSER user) { this.user = user; }
 }

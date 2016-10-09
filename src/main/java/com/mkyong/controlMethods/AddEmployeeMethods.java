@@ -1,3 +1,5 @@
+package com.mkyong.controlMethods;
+
 import com.mkyong.transport.PRACOWNIK;
 import com.mkyong.util.HibernateUtil;
 import org.hibernate.Session;
@@ -7,7 +9,7 @@ public class AddEmployeeMethods {
 	
 	public static boolean Validate(PRACOWNIK pracownik){
 
-		boolean result = false;
+		boolean result = true;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		if(result) {
@@ -25,6 +27,7 @@ public class AddEmployeeMethods {
 			}
 			finally
 			{
+
 				session.close();
 			}
 		}
