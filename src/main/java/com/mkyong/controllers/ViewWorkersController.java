@@ -117,7 +117,7 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
                     selectedWorker.setPesel(peselTxtFld.getText());
                     selectedWorker.setStawka(Float.valueOf(wageTxtFld.getText()));
                     ViewWorkersMethods.saveWorker(selectedWorker);
-                    EmployMenuController.setList();
+                    EmployMenuController.setWorkerList();
                 }
             });
 

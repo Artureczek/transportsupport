@@ -53,6 +53,9 @@ public class Main extends Application {
 	public static final String VIEWWORKERS = "viewworkers";
 	public static final String VIEWWORKERS_FXML = "/fxmlCR/fxml_viewWorkers.fxml";
 
+	public static final String VIEWCARS = "viewcars";
+	public static final String VIEWCARS_FXML = "/fxmlCR/fxml_ViewCars.fxml";
+
 
 
 	@Override
@@ -75,6 +78,7 @@ public class Main extends Application {
 		    mainContainer.loadScreen(Main.EMPLOYEEPARTC, Main.EMPLOYEEPARTC_FXML);
 		    mainContainer.loadScreen(Main.ADDCAR, Main.ADDCAR_FXML);
 			mainContainer.loadScreen(Main.VIEWWORKERS, Main.VIEWWORKERS_FXML);
+			mainContainer.loadScreen(Main.VIEWCARS, Main.VIEWCARS_FXML);
 
 		    mainContainer.setScreen(Main.LOGIN);
 							

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import com.mkyong.main.*;
 import com.mkyong.controlMethods.*;
+import com.mkyong.transport.POJAZD;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -67,6 +68,12 @@ public class AddCarController implements Initializable, ControlledScreen {
 	    @FXML
 	    private TextField spalanieTextField;
 
+		@FXML
+		private Label registerLbl;
+
+		@FXML
+		private TextField registerTxtFld;
+
 
 @Override
 public void initialize(URL arg0, ResourceBundle arg1) 
@@ -76,10 +83,12 @@ public void initialize(URL arg0, ResourceBundle arg1)
         @Override
         public void handle(ActionEvent arg0) 
         {
-        	 AddCarMethods acm = new AddCarMethods(markaTextField.getText(), modelTextField.getText(), silnikTextField.getText(), bakTextField.getText(), 
-        			 ladowniaTextField.getText(), spalanieTextField.getText());
-        	 
-        	 if(acm.Validate())
+        	 POJAZD car = new POJAZD(markaTextField.getText(), registerTxtFld.getText(), modelTextField.getText(), silnikTextField.getText(), Integer.valueOf(bakTextField.getText()),
+					 Integer.valueOf(ladowniaTextField.getText()), Float.valueOf(spalanieTextField.getText()), Main.activeUserEntity);
+
+			boolean result = AddCarMethods.Validate(car);
+
+        	 if(result)
         	 myController.setScreen(Main.EMPLOYMENU); 
         	 else
         	 incorrectLabel.setVisible(true);

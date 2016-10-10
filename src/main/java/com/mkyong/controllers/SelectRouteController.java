@@ -71,6 +71,9 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
     private RadioButton prioCostBttn;
 
     @FXML
+    private Button backBttn;
+
+    @FXML
     private TextField toTextField;
 
     ScreensController myController;
@@ -104,6 +107,7 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
             }
         });
 
+        backBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.ROUTEMENU); } });
 
     }
 

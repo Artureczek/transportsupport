@@ -1,5 +1,6 @@
 package com.mkyong.controllers;
 
+import com.mkyong.transport.POJAZD;
 import com.mkyong.transport.PRACOWNIK;
 import com.sun.glass.ui.View;
 import javafx.collections.FXCollections;
@@ -71,10 +72,11 @@ public class EmployMenuController implements Initializable, ControlledScreen
 		viewEmplBttn.setOnAction(new EventHandler<ActionEvent>() 
 		{
 	        @Override
-	        public void handle(ActionEvent arg0)  {
-
-				setList();
-				myController.setScreen(Main.VIEWWORKERS); }
+	        public void handle(ActionEvent arg0)
+			{
+				setWorkerList();
+				myController.setScreen(Main.VIEWWORKERS);
+			}
 	    });
 		
 		addCarBttn.setOnAction(new EventHandler<ActionEvent>() 
@@ -91,7 +93,8 @@ public class EmployMenuController implements Initializable, ControlledScreen
 	        @Override
 	        public void handle(ActionEvent arg0) 
 	        {
-	        	 myController.setScreen(Main.ADDEMPLOYEE); 
+				setCarList();
+				myController.setScreen(Main.VIEWCARS);
 	        }
 	    });
 
@@ -110,7 +113,7 @@ public class EmployMenuController implements Initializable, ControlledScreen
 		
 	}
 
-	public static void setList(){
+	public static void setWorkerList(){
 
 		List<PRACOWNIK> pracownikList = ViewWorkersMethods.getWorkers();
 		List<String> imieNaziwskoList = new ArrayList<>();
@@ -119,6 +122,18 @@ public class EmployMenuController implements Initializable, ControlledScreen
 		ViewWorkersController.workersListView.setItems(null);
 		ViewWorkersController.workersListView.setItems(items);
 		ViewWorkersController.workersListView.refresh();
+
+	}
+
+	public static void setCarList(){
+
+		List<POJAZD> pracownikList = ViewCarsMethods.getCars();
+		List<String> imieNaziwskoList = new ArrayList<>();
+		pracownikList.stream().forEach(e-> imieNaziwskoList.add(e.getMarka() + " " + e.getNrRejestracji()));
+		ObservableList<String> items = FXCollections.observableArrayList (imieNaziwskoList);
+		ViewCarsController.carsListView.setItems(null);
+		ViewCarsController.carsListView.setItems(items);
+		ViewCarsController.carsListView.refresh();
 
 	}
 	

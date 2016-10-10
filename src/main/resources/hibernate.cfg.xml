@@ -13,6 +13,7 @@
   <property name="show_sql">true</property>
   <mapping class="com.mkyong.transport.APPUSER"/>
   <mapping class="com.mkyong.transport.PRACOWNIK"/>
+  <mapping class="com.mkyong.transport.POJAZD"/>
   <!--<mapping resource="com/mkyong/transport/APPUSER.hbm.xml"></mapping>-->
 </session-factory>
 </hibernate-configuration>
