@@ -118,8 +118,8 @@ public class EmployMenuController implements Initializable, ControlledScreen
 		ViewWorkersController.workersListView.setItems(null);
 		ViewWorkersController.workersListView.setItems(items);
 		ViewWorkersController.workersListView.refresh();
-		//if(ViewWorkersController.workersListView.getItems().size()>0)
-		//	ViewWorkersController.workersListView.getSelectionModel().select(0);
+		if(ViewWorkersController.workersListView.getItems().size()>0)
+			ViewWorkersController.workersListView.getSelectionModel().select(0);
 
 	}
 

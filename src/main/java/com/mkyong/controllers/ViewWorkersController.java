@@ -116,7 +116,15 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
         wageBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { wageTxtFld.setEditable(true); }  });
         birthBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { birthDatePick.setEditable(true); }  });
         backBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.EMPLOYMENU); } });
-        docsBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.WORKERSDOCUMENTS); } });
+
+
+
+        docsBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) {
+           // setDocsList(selectedWorker);
+            myController.setScreen(Main.WORKERSDOCUMENTS);
+        } });
+
+
         saveBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0)
         {
 
@@ -139,7 +147,6 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
 
         deleteBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0)
         {
-
             Platform.runLater(new Runnable(){
                 @Override
                 public void run() {
@@ -170,7 +177,7 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
                         birthDatePick.setValue(selectedWorker.getDataUrodzenia().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                         if(selectedWorker.getStawka()!=null)
                         wageTxtFld.setText(String.valueOf(selectedWorker.getStawka()));
-                        setDocsList();
+
                     }
                 });
 
@@ -179,17 +186,17 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
 
     }
 
-    public static void setDocsList(){
+    public static void setDocsList(PRACOWNIK pracownik){
 
-        List<DOKUMENTPRACOWNIKA> documentPracownikaList = WorkersDocumentsMethods.getWorkersDocuments(selectedWorker);
-        List<String> docList = new ArrayList<>();
-        documentPracownikaList.stream().forEach(e-> docList.add(e.getNazwadokumentu().getNazwaDokumentu()));
-        if(ViewWorkersController.workersListView.getItems().size()>0) {
+        List<DOKUMENTPRACOWNIKA> documentPracownikaList = WorkersDocumentsMethods.getWorkersDocuments(pracownik);
+        if(documentPracownikaList.size()>0) {
+            List<String> docList = new ArrayList<>();
+            documentPracownikaList.stream().forEach(e-> docList.add(e.getNazwadokumentu().getNazwaDokumentu()));
             ObservableList<String> items = FXCollections.observableArrayList(docList);
-            ViewWorkersController.workersListView.setItems(null);
-            ViewWorkersController.workersListView.setItems(items);
-            ViewWorkersController.workersListView.refresh();
-            ViewWorkersController.workersListView.getSelectionModel().select(0);
+            WorkersDocumentsController.documentsListView.setItems(null);
+            WorkersDocumentsController.documentsListView.setItems(items);
+            WorkersDocumentsController.documentsListView.refresh();
+            WorkersDocumentsController.documentsListView.getSelectionModel().select(0);
         }
 
     }

@@ -1,5 +1,12 @@
 package com.mkyong.controllers;
 
+import com.mkyong.controlMethods.AddDocumentMethods;
+import com.mkyong.controlMethods.WorkersDocumentsMethods;
+import com.mkyong.main.Main;
+import com.mkyong.transport.DOKUMENTPRACOWNIKA;
+import com.mkyong.transport.NAZWADOKUMENTU;
+import com.mkyong.transport.PUSTYDOKUMENT;
+import com.mkyong.util.HibernateUtil;
 import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -15,28 +22,31 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.jpedal.examples.baseviewer.BaseViewerFX;
-import org.jpedal.examples.viewer.Commands;
+import org.apache.log4j.Layout;
+import org.hibernate.Session;
 import org.jpedal.examples.viewer.gui.javafx.FXViewerTransitions;
-import org.jpedal.examples.viewer.gui.javafx.dialog.FXInputDialog;
 import org.jpedal.exception.PdfException;
 import org.jpedal.external.PluginHandler;
 import org.jpedal.objects.PdfPageData;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Observable;
+import java.util.List;
 import java.util.ResourceBundle;
+
+//import org.apache.pdfbox.pdmodel.PDDocument;
+//import org.apache.pdfbox.pdmodel.PDPage;
 
 /**
  * Created by akielbiewski on 10.10.2016.
@@ -45,8 +55,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
     ScreensController myController;
 
-    @FXML
-    private ListView<String> docsListView;
 
     @FXML
     private BorderPane pane;
@@ -58,10 +66,155 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
     private BorderPane centerPane;
 
     @FXML
-    private Button loadBttn;
+    private Label insertDocLbl;
+
+    @FXML
+    private Button insertDocBttn;
+
+    @FXML
+    private Button deleteDocBttn;
+
+    @FXML
+    private Label deleteDocLbl;
+
+    @FXML
+    private Label noDocLbl;
+
+    @FXML
+    private Button backBttn;
+
+    @FXML
+    private Button finishBttn;
+
+    @FXML
+    private AnchorPane rightPane;
+    
 
     public static ListView<String> documentsListView;
+    public static String selectedDoc;
+    public static DOKUMENTPRACOWNIKA selectedDokumentPracownika;
 
+    private FXViewerTransitions.TransitionType transitionType = FXViewerTransitions.TransitionType.None;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        pane.setCenter(null);
+        pane.setLeft(null);
+        pane.setRight(null);
+        pane.setBottom(null);
+        pane.setTop(null);
+        documentsListView = new ListView<>();
+        //listPane.setCenter(documentsListView);
+        List<NAZWADOKUMENTU.DokumentNazwa> list = Arrays.asList(NAZWADOKUMENTU.DokumentNazwa.values());
+        List<String> nameList = new ArrayList<>();
+        list.stream().forEach(e->nameList.add(e.value()));
+        ObservableList<String> items = FXCollections.observableArrayList (nameList);
+        documentsListView.setItems( items);
+        documentsListView.getSelectionModel().select(0);
+        deleteDocBttn.setDisable(true);
+
+        setupViewer(1278,808, pane);
+
+
+        documentsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+                Platform.runLater(new Runnable(){
+                    @Override
+                    public void run() {
+                        try {
+                            selectedDoc = newValue;
+                            File selectedFile = WorkersDocumentsMethods.getWorkersFile(selectedDoc, ViewWorkersController.selectedWorker);
+                            if(selectedFile==null) {
+                                loadPDF(WorkersDocumentsMethods.getEmpty());
+                                noDocLbl.setVisible(true);
+                                deleteDocBttn.setDisable(true);
+                            }
+                            else{
+                                deleteDocBttn.setDisable(false);
+                                loadPDF(selectedFile);
+                                noDocLbl.setVisible(false);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+
+        insertDocBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0)
+        {
+            FileChooser fileChooser = new FileChooser();
+            File selectedFile = fileChooser.showOpenDialog(null);
+
+            if (selectedFile != null) {
+                try {
+                DOKUMENTPRACOWNIKA dokumentpracownika = new DOKUMENTPRACOWNIKA();
+                dokumentpracownika.setAktywny(true);
+                dokumentpracownika.setNazwa(EmployeePartAController.getName(selectedFile.getName()));
+                dokumentpracownika.setRozszerzenieDokumentu(EmployeePartAController.getExtension(selectedFile.getName()));
+                dokumentpracownika.setPracownik(ViewWorkersController.selectedWorker);
+                dokumentpracownika.setNazwadokumentu(AddDocumentMethods.findDocumentByNazwa(documentsListView.getSelectionModel().getSelectedItem()));
+                dokumentpracownika.setDokument(Files.readAllBytes(selectedFile.toPath()));
+                AddDocumentMethods.saveDocument(dokumentpracownika);
+                loadPDF(selectedFile);
+                noDocLbl.setVisible(false);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                System.out.println("File selection cancelled.");
+            }
+
+
+        } });
+
+        deleteDocBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0)
+        {
+
+            try {
+                WorkersDocumentsMethods.deleteDocument(selectedDokumentPracownika);
+                noDocLbl.setVisible(true);
+                loadPDF(WorkersDocumentsMethods.getEmpty());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        } });
+
+
+        backBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.VIEWWORKERS); } });
+        finishBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.EMPLOYMENU); } });
+
+
+       /* backBttn.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent arg0)
+            {
+                FileChooser fileChooser = new FileChooser();
+                File selectedFile = fileChooser.showOpenDialog(null);
+
+                if (selectedFile != null) {
+
+                    PUSTYDOKUMENT pustydokument = new PUSTYDOKUMENT();
+
+
+                }
+                else {
+                    System.out.println("File selection cancelled.");
+                }
+            }
+        });*/
+
+
+    }
 
     private final org.jpedal.PdfDecoderFX pdf = new org.jpedal.PdfDecoderFX();
 
@@ -91,15 +244,16 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
     private boolean closePasswordPrompt; //boolean controls whether or not we should close the prompt box
 
 
-    // Layout panes
-    //private VBox top;
-    //private HBox bottom;
+     Layout panes;
+    private VBox top;
+    private HBox bottom;
     private ScrollPane center;
     //Group is a container which holds the decoded PDF content
-    //private Group group;
+    private Group group;
 
     // for the location of the pdf file
-    //private Text fileLoc;
+    //
+    private Text fileLoc;
 
     private float scale = 1.0f;
 
@@ -113,67 +267,328 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
     private int currentPage = 1;
 
-    Stage stage;
+    //Stage stage;
 
-    Scene scene;
+    //Scene scene;
 
     //Controls size of the stage, in theory setting this to a higher value will
     //increase image quality as there's more pixels due to higher image resolutions
     static final int FXscaling=1;
 
     FitToPage zoomMode = FitToPage.AUTO;
+    public void setupViewer(final int w, final int h, BorderPane root){
+        top = new VBox();
 
-    private FXViewerTransitions.TransitionType transitionType = FXViewerTransitions.TransitionType.None;
+        root.setTop(top);
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+        top.getChildren().add(setupToolBar());
 
-        documentsListView = new ListView<>();
-        listPane.setCenter(documentsListView);
+        center = new ScrollPane();
+        center.setPannable(true);
+        center.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        center.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
+        //needs to be added via group so resizes (see http://pixelduke.wordpress.com/2012/09/16/zooming-inside-a-scrollpane/)
+        group=new Group();
+        group.getChildren().add(pdf);
+        center.setContent(group);
+        root.setCenter(center);
 
-        try {
-            center = new ScrollPane();
-            center.setPannable(true);
-            center.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-            center.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-            Group group = new Group();
-            group.getChildren().add(pdf);
-            center.setContent(group);
-            centerPane.setCenter(group);
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        loadBttn.setOnAction(new EventHandler<ActionEvent>()
-        {
+        center.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
-            public void handle(ActionEvent arg0)
-            {
-                FileChooser fileChooser = new FileChooser();
-                File selectedFile = fileChooser.showOpenDialog(null);
+            public void changed(final ObservableValue<? extends Bounds> ov, final Bounds ob, final Bounds nb) {
+                adjustPagePosition(nb);
+            }
+        });
 
-                if (selectedFile != null) {
+        root.setLeft(documentsListView);
+        root.setRight(rightPane);
+    }
 
-                    try {
-                        loadPDF(selectedFile);
-                    } catch (PdfException e) {
-                        e.printStackTrace();
+    public void addListeners(){
+
+
+        /*
+         * auto adjust so dynamically resized as viewer width alters
+         */
+        finishBttn.getScene().widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(final ObservableValue<? extends Number> observableValue, final Number oldSceneWidth, final Number newSceneWidth) {
+
+                //fitToX(zoomMode);
+
+            }
+        });
+
+        finishBttn.getScene().heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(final ObservableValue<? extends Number> observableValue, final Number oldSceneHeight, final Number newSceneHeight) {
+
+               // fitToX(zoomMode);
+
+            }
+        });
+
+        /*
+         * Controls for dragging a PDF into the scene
+         * Using the dragboard, which extends the clipboard class,
+         * detect a file being dragged onto the scene and if the user drops the file
+         * we load it.
+         */
+        finishBttn.getScene().setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(final DragEvent event) {
+                final Dragboard db = event.getDragboard();
+                if (db.hasFiles()) {
+                    event.acceptTransferModes(TransferMode.COPY);
+                } else {
+                    event.consume();
+                }
+            }
+        });
+
+        finishBttn.getScene().setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(final DragEvent event) {
+                final Dragboard db = event.getDragboard();
+                boolean success = false;
+                if(db.hasFiles()){
+                    success = true;
+                    // Only get the first file from the list
+                    file = db.getFiles().get(0);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadPDF(file);
+                        }
+                    });
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
+    }
+
+    /**
+     * Sets up a MenuBar to be used at the top of the window.
+     * It contains one Menu - navMenu - which allows the user to open and navigate pdf files
+     * @return
+     */
+    private ToolBar setupToolBar() {
+
+        final ToolBar toolbar = new ToolBar();
+
+        final Button open = new Button("Open");
+        final Button back = new Button("Back");
+        final ComboBox<String> pages = new ComboBox<String>();
+        final Label pageCount = new Label();
+        final Button forward = new Button("Forward");
+        final Button zoomIn = new Button("Zoom in");
+        final Button zoomOut = new Button("Zoom out");
+        final Button fitWidth = new Button("Fit to Width");
+        final Button fitHeight = new Button("Fit to Height");
+        final Button fitPage = new Button("Fit to Page");
+
+        ComboBox<String> transitionList = new ComboBox<String>();
+
+        open.setId("open");
+        back.setId("back");
+        pageCount.setId("pgCount");
+        pages.setId("pages");
+        forward.setId("forward");
+        zoomIn.setId("zoomIn");
+        zoomOut.setId("zoomOut");
+        fitWidth.setId("fitWidth");
+        fitHeight.setId("fitHeight");
+        fitPage.setId("fitPage");
+
+        /*
+         * Open the PDF File
+         */
+        open.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(final ActionEvent t) {
+                final FileChooser chooser = new FileChooser();
+                chooser.setTitle("Open PDF file");
+
+                //Open directory from existing directory
+                if(file != null){
+                    final File existDirectory = file.getParentFile();
+                    if(existDirectory.exists()) {
+                        chooser.setInitialDirectory(existDirectory);
                     }
                 }
-                else {
-                    System.out.println("File selection cancelled.");
 
+                //Set extension filter
+                final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                chooser.getExtensionFilters().add(extFilter);
+
+                file = chooser.showOpenDialog(null);
+
+                if(file != null){
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadPDF(file);
+                        }
+                    });
+                }
+            }
+        });
+
+        pages.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(final ObservableValue<? extends Number> ov, final Number oldVal, final Number newVal) {
+                if(newVal.intValue() != -1 && newVal.intValue()+1 != currentPage){
+                    final int newPage = newVal.intValue() + 1;
+                    goToPage(newPage);
+                }
+            }});
+
+        // Navigate backward
+        back.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(final ActionEvent t) {
+                if (currentPage > 1) {
+                    goToPage(currentPage - 1);
                 }
 
             }
         });
 
+        // Navigate forward
+        forward.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(final ActionEvent t) {
+                if (currentPage < pdf.getPageCount()) {
+                    goToPage(currentPage + 1);
+                }
 
+            }
+        });
+
+        // Zoom in
+        zoomIn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(final ActionEvent t) {
+                zoomMode = FitToPage.NONE;
+
+                if (currentScaling < scalings.length - 1) {
+
+                    currentScaling = findClosestIndex(scale, scalings);
+
+                    if (scale >= scalings[findClosestIndex(scale, scalings)]) {
+
+                        currentScaling++;
+
+                    }
+
+                    scale = scalings[currentScaling];
+
+                }
+
+                pdf.setPageParameters(scale, currentPage);
+                adjustPagePosition(center.getViewportBounds());
+            }
+        });
+
+        // Zoom out
+        zoomOut.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(final ActionEvent t) {
+                zoomMode = FitToPage.NONE;
+
+                if (currentScaling > 0) {
+
+                    currentScaling = findClosestIndex(scale, scalings);
+
+                    if (scale <= scalings[findClosestIndex(scale, scalings)]) {
+
+                        currentScaling--;
+
+                    }
+
+                    scale = scalings[currentScaling];
+
+                }
+
+                pdf.setPageParameters(scale, currentPage);
+                adjustPagePosition(center.getViewportBounds());
+            }
+        });
+
+        // Fit to width
+        fitWidth.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(final ActionEvent t) {
+                zoomMode = FitToPage.WIDTH;
+               // fitToX(FitToPage.WIDTH);
+
+            }
+        });
+
+        // Fit to height
+        fitHeight.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(final ActionEvent t) {
+                zoomMode = FitToPage.HEIGHT;
+                //fitToX(FitToPage.HEIGHT);
+
+            }
+        });
+
+        // Fit to Page
+        fitPage.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(final ActionEvent t) {
+                zoomMode = FitToPage.AUTO;
+               // fitToX(FitToPage.AUTO);
+
+
+            }
+        });
+
+
+        final Region spacerLeft = new Region();
+        final Region spacerRight = new Region();
+        HBox.setHgrow(spacerLeft, Priority.ALWAYS);
+        HBox.setHgrow(spacerRight, Priority.ALWAYS);
+
+
+
+        // Set up the ComboBox for transitions
+        final ObservableList<String> options = FXCollections.observableArrayList();
+
+        for(final FXViewerTransitions.TransitionType transition : FXViewerTransitions.TransitionType.values()){
+            options.add(transition.name());
+        }
+
+        if(!options.isEmpty()){
+            transitionList = new ComboBox<String>(options);
+            // Put before setValue so that setValue triggers the event
+            transitionList.valueProperty().addListener(new ChangeListener<String>(){
+                @Override public void changed(final ObservableValue<? extends String> ov, final String oldVal, final String newVal) {
+                    transitionType = FXViewerTransitions.TransitionType.valueOf(newVal);
+                }});
+
+            transitionList.setValue(options.get(transitionType.ordinal()));
+        }
+
+        toolbar.getItems().addAll(open, spacerLeft, back, pages, pageCount, forward, zoomIn, zoomOut, spacerRight, transitionList);
+
+        return toolbar;
     }
 
-    public void loadPDF(final File input) throws PdfException {
+    /**
+     * take a File handle to PDF file on local filesystem and displays in PDF viewer
+     * @param input  The PDF file to load in the viewer
+     */
+    public void loadPDF(final File input){
 
         if(input == null) {
             return;
@@ -181,8 +596,8 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
         scale = 1; //reset to default for new page
 
-//        PDFfile=input.getAbsolutePath();
-  //      fileLoc.setText(PDFfile);
+        PDFfile=input.getAbsolutePath();
+       // fileLoc.setText(PDFfile);
 
         openFile(input,null,false);
 
@@ -192,7 +607,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
      * take a File handle to PDF file on local filesystem and displays in PDF viewer
      * @param input The PDF file to load in the viewer
      */
-    public void loadPDF(final String input) throws PdfException {
+    public void loadPDF(final String input){
 
         if(input == null) {
             return;
@@ -200,7 +615,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
         scale = 1; //reset to default for new page
         PDFfile=input;
-     //   fileLoc.setText(PDFfile);
+        fileLoc.setText(PDFfile);
 
         if(input.startsWith("http")){
             openFile(null, input,true);
@@ -210,8 +625,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
     }
 
-
-    private void openFile(final File input,String url, boolean isURL) throws PdfException {
+    private void openFile(final File input,String url, boolean isURL) {
         try {
             //Open the pdf file so we can check for encryption
             if(isURL){
@@ -252,7 +666,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
                     if(System.getProperty("org.jpedal.password")!=null){
                         password = System.getProperty("org.jpedal.password");
                     }else if(!closePasswordPrompt){
-                        showPasswordPrompt(passwordCount);
+                       // showPasswordPrompt(passwordCount);
                     }
 
                     //If we have a password, try and open the PdfFile again with the password
@@ -273,12 +687,12 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
             }
 
             // Set up top bar values
-           // ((Labeled)top.lookup("#pgCount")).setText("/" + pdf.getPageCount());
-            /*final ComboBox<String> pages = ((ComboBox<String>)top.lookup("#pages"));
+            ((Labeled)top.lookup("#pgCount")).setText("/" + pdf.getPageCount());
+            final ComboBox<String> pages = ((ComboBox<String>)top.lookup("#pages"));
             pages.getItems().clear();
             for(int i = 1; i <= pdf.getPageCount(); i++){
                 pages.getItems().add(String.valueOf(i));
-            }*/
+            }
             // Goes to the first page and starts the decoding process
             goToPage(currentPage);
 
@@ -289,7 +703,8 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
     }
 
-    private void showPasswordPrompt(final int passwordCount){
+
+   /* private void showPasswordPrompt(final int passwordCount){
 
         //Setup password prompt content
         final Text titleText = new Text("Password Request");
@@ -311,8 +726,55 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
         password = passwordInput.showInputDialog();
 
-    }
+    }*/
 
+   /* private void fitToX(final FitToPage fitToPage) {
+
+        if(fitToPage == FitToPage.NONE) {
+            return;
+        }
+
+        final float pageW=pdf.getPdfPageData().getCropBoxWidth2D(currentPage);
+        final float pageH=pdf.getPdfPageData().getCropBoxHeight2D(currentPage);
+        final int rotation = pdf.getPdfPageData().getRotation(currentPage);
+
+        //Handle how we auto fit the content to the page
+        if(fitToPage == FitToPage.AUTO && (pageW < pageH)){
+            if(pdf.getPDFWidth()<pdf.getPDFHeight()) {
+                fitToX(FitToPage.HEIGHT);
+            }
+            else {
+                fitToX(FitToPage.WIDTH);
+            }
+        }
+
+        //Handle how we fit the content to the page width or height
+        if(fitToPage == FitToPage.WIDTH){
+            final float width=(float) (finishBttn.getScene().getWidth());
+            if(rotation==90 || rotation==270){
+                scale = (width - insetX - insetX) / pageH;
+            }else{
+                scale = (width - insetX - insetX) / pageW;
+            }
+        }else if(fitToPage == FitToPage.HEIGHT){
+            final float height=(float) (finishBttn.getScene().getHeight()-top.getBoundsInLocal().getHeight()-bottom.getHeight());
+
+            if(rotation==90 || rotation==270){
+                scale = (height - insetY - insetY) / pageW;
+            }else{
+                scale = (height - insetY - insetY) / pageH;
+            }
+        }
+
+        pdf.setPageParameters(scale, currentPage);
+    }*/
+
+    /**
+     * Locate scaling value closest to current scaling setting
+     * @param scale
+     * @param scalings
+     * @return int
+     */
     private static int findClosestIndex(final float scale, final float[] scalings) {
         float currentMinDiff = Float.MAX_VALUE;
         int closest = 0;
@@ -348,55 +810,13 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        //fitToX(FitToPage.AUTO);
-       // updateNavButtons();
+       // fitToX(FitToPage.AUTO);
+        updateNavButtons();
         setBorder();
-        //adjustPagePosition(center.getViewportBounds());
+        adjustPagePosition(center.getViewportBounds());
     }
 
-    /*private void fitToX(final FitToPage fitToPage) {
-
-        if(fitToPage == FitToPage.NONE) {
-            return;
-        }
-
-        final float pageW=pdf.getPdfPageData().getCropBoxWidth2D(currentPage);
-        final float pageH=pdf.getPdfPageData().getCropBoxHeight2D(currentPage);
-        final int rotation = pdf.getPdfPageData().getRotation(currentPage);
-
-        //Handle how we auto fit the content to the page
-        if(fitToPage == FitToPage.AUTO && (pageW < pageH)){
-            if(pdf.getPDFWidth()<pdf.getPDFHeight()) {
-                fitToX(FitToPage.HEIGHT);
-            }
-            else {
-                fitToX(FitToPage.WIDTH);
-            }
-        }
-
-        //Handle how we fit the content to the page width or height
-        if(fitToPage == FitToPage.WIDTH){
-            final float width=(float) (scene.getWidth());
-            if(rotation==90 || rotation==270){
-                scale = (width - insetX - insetX) / pageH;
-            }else{
-                scale = (width - insetX - insetX) / pageW;
-            }
-        }else if(fitToPage == FitToPage.HEIGHT){
-            final float height=(float) (scene.getHeight()-top.getBoundsInLocal().getHeight()-bottom.getHeight());
-
-            if(rotation==90 || rotation==270){
-                scale = (height - insetY - insetY) / pageW;
-            }else{
-                scale = (height - insetY - insetY) / pageH;
-            }
-        }
-
-        pdf.setPageParameters(scale, currentPage);
-    }*/
-
-
-    /*private void updateNavButtons(){
+    private void updateNavButtons(){
         if(currentPage > 1){
             top.lookup("#back").setDisable(false);
         }else{
@@ -410,7 +830,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         }
 
         ((ComboBox)top.lookup("#pages")).getSelectionModel().select(currentPage - 1);
-    }*/
+    }
 
     private void goToPage(final int newPage){
 
@@ -485,7 +905,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         return PDFfile;
     }
 
-   /* private void adjustPagePosition(final Bounds nb){
+    private void adjustPagePosition(final Bounds nb){
         // (new scrollbar width / 2) - (page width / 2)
         double adjustment = ((nb.getWidth() / 2) - (group.getBoundsInLocal().getWidth() /2));
         // Keep the group within the viewport of the scrollpane
@@ -493,7 +913,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
             adjustment = 0;
         }
         group.setTranslateX(adjustment);
-    }*/
+    }
 
     // Set a space between the top toolbar and the page
     private void setBorder() {

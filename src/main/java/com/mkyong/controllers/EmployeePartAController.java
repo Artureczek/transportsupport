@@ -148,7 +148,7 @@ public class EmployeePartAController implements Initializable, ControlledScreen 
 		
 	}
 
-	private String getExtension (String fileName){
+	public static String getExtension (String fileName){
 
 		String extension = "";
 
@@ -160,7 +160,7 @@ public class EmployeePartAController implements Initializable, ControlledScreen 
 		return extension;
 	}
 
-	private String getName (String fileName){
+	public static String getName (String fileName){
 
 		String extension = "";
 
