@@ -11,24 +11,25 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="nameLbl" layoutX="246.0" layoutY="57.0" text="Imie" />
-            <Label fx:id="surnameLbl" layoutX="246.0" layoutY="157.0" prefHeight="17.0" prefWidth="80.0" text="Nazwisko" />
-            <Label fx:id="peselLbl" layoutX="246.0" layoutY="256.0" prefHeight="17.0" prefWidth="51.0" text="Pesel" />
-            <Label fx:id="birthLbl" layoutX="245.0" layoutY="351.0" text="Data Urodzenia" />
-            <Label fx:id="wageLbl" layoutX="246.0" layoutY="452.0" prefHeight="17.0" prefWidth="49.0" text="Stawka" />
-            <TextField fx:id="nameTxtFld" editable="false" layoutX="384.0" layoutY="53.0" />
-            <TextField fx:id="surnameTxtFld" editable="false" layoutX="384.0" layoutY="153.0" />
-            <TextField fx:id="peselTxtFld" editable="false" layoutX="384.0" layoutY="252.0" />
-            <TextField fx:id="wageTxtFld" editable="false" layoutX="384.0" layoutY="448.0" />
-            <Button fx:id="nameBttn" layoutX="571.0" layoutY="53.0" mnemonicParsing="false" text="Edytuj" />
-            <Button fx:id="surnameBttn" layoutX="571.0" layoutY="153.0" mnemonicParsing="false" text="Edytuj" />
-            <Button fx:id="peselBttn" layoutX="571.0" layoutY="252.0" mnemonicParsing="false" text="Edytuj" />
-            <Button fx:id="birthBttn" layoutX="571.0" layoutY="347.0" mnemonicParsing="false" text="Edytuj" />
-            <Button fx:id="wageBttn" layoutX="571.0" layoutY="448.0" mnemonicParsing="false" text="Edytuj" />
-            <Button fx:id="saveBttn" layoutX="432.0" layoutY="536.0" mnemonicParsing="false" text="Zapisz" />
+            <Label fx:id="nameLbl" layoutX="249.0" layoutY="83.0" prefHeight="21.0" prefWidth="94.0" text="Imie" />
+            <Label fx:id="surnameLbl" layoutX="247.0" layoutY="153.0" prefHeight="21.0" prefWidth="99.0" text="Nazwisko" />
+            <Label fx:id="peselLbl" layoutX="247.0" layoutY="223.0" prefHeight="21.0" prefWidth="113.0" text="Pesel" />
+            <Label fx:id="birthLbl" layoutX="247.0" layoutY="298.0" prefHeight="21.0" prefWidth="130.0" text="Data Urodzenia" />
+            <Label fx:id="wageLbl" layoutX="245.0" layoutY="369.0" prefHeight="21.0" prefWidth="98.0" text="Stawka" />
+            <TextField fx:id="nameTxtFld" editable="false" layoutX="384.0" layoutY="78.0" />
+            <TextField fx:id="surnameTxtFld" editable="false" layoutX="384.0" layoutY="148.0" />
+            <TextField fx:id="peselTxtFld" editable="false" layoutX="384.0" layoutY="218.0" />
+            <TextField fx:id="wageTxtFld" editable="false" layoutX="384.0" layoutY="364.0" />
+            <Button fx:id="nameBttn" layoutX="571.0" layoutY="78.0" mnemonicParsing="false" text="Edytuj" />
+            <Button fx:id="surnameBttn" layoutX="571.0" layoutY="148.0" mnemonicParsing="false" text="Edytuj" />
+            <Button fx:id="peselBttn" layoutX="569.0" layoutY="218.0" mnemonicParsing="false" text="Edytuj" />
+            <Button fx:id="birthBttn" layoutX="569.0" layoutY="293.0" mnemonicParsing="false" text="Edytuj" />
+            <Button fx:id="wageBttn" layoutX="571.0" layoutY="364.0" mnemonicParsing="false" text="Edytuj" />
+            <Button fx:id="saveBttn" layoutX="447.0" layoutY="536.0" mnemonicParsing="false" text="Zapisz" />
             <Button fx:id="backBttn" layoutX="102.0" layoutY="536.0" mnemonicParsing="false" text="Wroc" />
-            <DatePicker fx:id="birthDatePick" editable="false" layoutX="387.0" layoutY="347.0" prefHeight="25.0" prefWidth="147.0" />
+            <DatePicker fx:id="birthDatePick" editable="false" layoutX="386.0" layoutY="293.0" prefHeight="31.0" prefWidth="183.0" />
             <Button fx:id="deleteBttn" layoutX="790.0" layoutY="536.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="67.0" text="Usun" />
+            <Button fx:id="docsBttn" layoutX="407.0" layoutY="442.0" mnemonicParsing="false" text="Pokaz Dokumenty" />
          </children>
       </AnchorPane>
    </center>

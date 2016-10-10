@@ -1,11 +1,15 @@
 package com.mkyong.controllers;
 
 import com.mkyong.controlMethods.ViewWorkersMethods;
+import com.mkyong.controlMethods.WorkersDocumentsMethods;
 import com.mkyong.main.Main;
+import com.mkyong.transport.DOKUMENTPRACOWNIKA;
 import com.mkyong.transport.PRACOWNIK;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -17,7 +21,9 @@ import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 /**
  * Created by artur on 08.10.2016.
@@ -83,6 +89,9 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
     private Button deleteBttn;
 
     @FXML
+    private Button docsBttn;
+
+    @FXML
     private BorderPane listPane;
 
     public static ListView<String> workersListView;
@@ -107,6 +116,7 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
         wageBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { wageTxtFld.setEditable(true); }  });
         birthBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { birthDatePick.setEditable(true); }  });
         backBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.EMPLOYMENU); } });
+        docsBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.WORKERSDOCUMENTS); } });
         saveBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0)
         {
 
@@ -160,12 +170,27 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
                         birthDatePick.setValue(selectedWorker.getDataUrodzenia().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                         if(selectedWorker.getStawka()!=null)
                         wageTxtFld.setText(String.valueOf(selectedWorker.getStawka()));
-
+                        setDocsList();
                     }
                 });
 
             }
         });
+
+    }
+
+    public static void setDocsList(){
+
+        List<DOKUMENTPRACOWNIKA> documentPracownikaList = WorkersDocumentsMethods.getWorkersDocuments(selectedWorker);
+        List<String> docList = new ArrayList<>();
+        documentPracownikaList.stream().forEach(e-> docList.add(e.getNazwadokumentu().getNazwaDokumentu()));
+        if(ViewWorkersController.workersListView.getItems().size()>0) {
+            ObservableList<String> items = FXCollections.observableArrayList(docList);
+            ViewWorkersController.workersListView.setItems(null);
+            ViewWorkersController.workersListView.setItems(items);
+            ViewWorkersController.workersListView.refresh();
+            ViewWorkersController.workersListView.getSelectionModel().select(0);
+        }
 
     }
 
