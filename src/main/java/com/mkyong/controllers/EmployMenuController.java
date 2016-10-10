@@ -106,11 +106,7 @@ public class EmployMenuController implements Initializable, ControlledScreen
 				myController.setScreen(Main.MAINSCREEN);
 			}
 		});
-		
-		
-		
-		
-		
+
 	}
 
 	public static void setWorkerList(){
@@ -122,6 +118,8 @@ public class EmployMenuController implements Initializable, ControlledScreen
 		ViewWorkersController.workersListView.setItems(null);
 		ViewWorkersController.workersListView.setItems(items);
 		ViewWorkersController.workersListView.refresh();
+		if(ViewWorkersController.workersListView.getItems().size()>0)
+			ViewWorkersController.workersListView.getSelectionModel().select(0);
 
 	}
 
@@ -134,6 +132,8 @@ public class EmployMenuController implements Initializable, ControlledScreen
 		ViewCarsController.carsListView.setItems(null);
 		ViewCarsController.carsListView.setItems(items);
 		ViewCarsController.carsListView.refresh();
+		if(ViewCarsController.carsListView.getItems().size()>0)
+			ViewCarsController.carsListView.getSelectionModel().select(0);
 
 	}
 	

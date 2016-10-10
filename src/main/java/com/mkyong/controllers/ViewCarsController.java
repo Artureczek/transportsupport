@@ -98,6 +98,9 @@ public class ViewCarsController implements Initializable, ControlledScreen {
     @FXML
     private Button registryBttn;
 
+    @FXML
+    private Button deleteBttn;
+
     public static ListView<String> carsListView;
     public static POJAZD selectedCar;
 
@@ -137,6 +140,19 @@ public class ViewCarsController implements Initializable, ControlledScreen {
                     selectedCar.setNrRejestracji(registryTxtFld.getText());
                     ViewCarsMethods.saveCar(selectedCar);
                     EmployMenuController.setWorkerList();
+                }
+            });
+
+        }  });
+
+        deleteBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0)
+        {
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+
+                    ViewCarsMethods.deleteCar(selectedCar);
+                    EmployMenuController.setCarList();
                 }
             });
 

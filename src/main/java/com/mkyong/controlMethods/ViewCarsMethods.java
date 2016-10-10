@@ -86,4 +86,22 @@ public class ViewCarsMethods {
         }
 
     }
+
+    public static void deleteCar(POJAZD pojazd){
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Object merged = session.merge(pojazd);
+            session.beginTransaction();
+            session.delete(merged);
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+    }
+
 }

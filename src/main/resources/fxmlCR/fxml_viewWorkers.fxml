@@ -28,6 +28,7 @@
             <Button fx:id="saveBttn" layoutX="432.0" layoutY="536.0" mnemonicParsing="false" text="Zapisz" />
             <Button fx:id="backBttn" layoutX="102.0" layoutY="536.0" mnemonicParsing="false" text="Wroc" />
             <DatePicker fx:id="birthDatePick" editable="false" layoutX="387.0" layoutY="347.0" prefHeight="25.0" prefWidth="147.0" />
+            <Button fx:id="deleteBttn" layoutX="790.0" layoutY="536.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="67.0" text="Usun" />
          </children>
       </AnchorPane>
    </center>

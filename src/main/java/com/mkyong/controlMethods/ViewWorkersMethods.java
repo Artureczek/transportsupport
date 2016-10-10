@@ -2,6 +2,7 @@ package com.mkyong.controlMethods;
 
 import com.mkyong.main.Main;
 import com.mkyong.transport.APPUSER;
+import com.mkyong.transport.DOKUMENTPRACOWNIKA;
 import com.mkyong.transport.PRACOWNIK;
 import com.mkyong.util.HibernateUtil;
 import org.hibernate.Query;
@@ -79,6 +80,49 @@ public class ViewWorkersMethods {
             session.beginTransaction();
             session.saveOrUpdate(merged);
             session.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+    }
+
+    public static void deleteWorker(PRACOWNIK pracownik){
+
+        deleteWorkersDocuments(pracownik);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Object merged = session.merge(pracownik);
+            session.beginTransaction();
+            session.delete(merged);
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+    }
+
+    private static void deleteWorkersDocuments(PRACOWNIK pracownik){
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            String hql = "FROM DOKUMENTPRACOWNIKA DP WHERE DP.pracownik=:pracownik";
+            Query query = session.createQuery(hql).setParameter("pracownik",pracownik);
+            List results = query.list();
+            if(results.size()>0) {
+
+                for (Iterator iterator = results.iterator(); iterator.hasNext(); ) {
+                    DOKUMENTPRACOWNIKA dokumentpracownika = (DOKUMENTPRACOWNIKA) iterator.next();
+                    session.delete(dokumentpracownika);
+                }
+                session.getTransaction().commit();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

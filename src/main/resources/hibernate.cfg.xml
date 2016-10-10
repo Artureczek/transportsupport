@@ -5,8 +5,8 @@
 <hibernate-configuration>
  <session-factory>
   <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-  <property name="hibernate.connection.url">jdbc:Oracle:thin:@localhost:1521:transport</property>
-  <property name="hibernate.connection.username">C##TRANS</property>
+  <property name="hibernate.connection.url">jdbc:Oracle:thin:@localhost:1522:orcl</property>
+  <property name="hibernate.connection.username">C##ART</property>
   <property name="hibernate.connection.password">nokia3310</property>
   <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
  <!-- <property name="hibernate.default_schema">transport</property>-->
@@ -14,6 +14,8 @@
   <mapping class="com.mkyong.transport.APPUSER"/>
   <mapping class="com.mkyong.transport.PRACOWNIK"/>
   <mapping class="com.mkyong.transport.POJAZD"/>
+  <mapping class="com.mkyong.transport.NAZWADOKUMENTU"/>
+  <mapping class="com.mkyong.transport.DOKUMENTPRACOWNIKA"/>
   <!--<mapping resource="com/mkyong/transport/APPUSER.hbm.xml"></mapping>-->
 </session-factory>
 </hibernate-configuration>

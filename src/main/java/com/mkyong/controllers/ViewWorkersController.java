@@ -80,6 +80,9 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
     private Button backBttn;
 
     @FXML
+    private Button deleteBttn;
+
+    @FXML
     private BorderPane listPane;
 
     public static ListView<String> workersListView;
@@ -117,6 +120,20 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
                     selectedWorker.setPesel(peselTxtFld.getText());
                     selectedWorker.setStawka(Float.valueOf(wageTxtFld.getText()));
                     ViewWorkersMethods.saveWorker(selectedWorker);
+                    EmployMenuController.setWorkerList();
+                }
+            });
+
+        }  });
+
+
+        deleteBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0)
+        {
+
+            Platform.runLater(new Runnable(){
+                @Override
+                public void run() {
+                    ViewWorkersMethods.deleteWorker(selectedWorker);
                     EmployMenuController.setWorkerList();
                 }
             });
