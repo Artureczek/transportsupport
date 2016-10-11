@@ -93,6 +93,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
     public static ListView<String> documentsListView;
     public static String selectedDoc;
     public static DOKUMENTPRACOWNIKA selectedDokumentPracownika;
+    private ProgressIndicator progressIndicator;
 
     private FXViewerTransitions.TransitionType transitionType = FXViewerTransitions.TransitionType.None;
 
@@ -105,7 +106,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         pane.setBottom(null);
         pane.setTop(null);
         documentsListView = new ListView<>();
-        //listPane.setCenter(documentsListView);
         List<NAZWADOKUMENTU.DokumentNazwa> list = Arrays.asList(NAZWADOKUMENTU.DokumentNazwa.values());
         List<String> nameList = new ArrayList<>();
         list.stream().forEach(e->nameList.add(e.value()));
@@ -113,8 +113,9 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         documentsListView.setItems( items);
         documentsListView.getSelectionModel().select(0);
         deleteDocBttn.setDisable(true);
-
-        setupViewer(1278,808, pane);
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.
+        setupViewer(pane);
 
 
         documentsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -192,28 +193,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         backBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.VIEWWORKERS); } });
         finishBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.EMPLOYMENU); } });
 
-
-       /* backBttn.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent arg0)
-            {
-                FileChooser fileChooser = new FileChooser();
-                File selectedFile = fileChooser.showOpenDialog(null);
-
-                if (selectedFile != null) {
-
-                    PUSTYDOKUMENT pustydokument = new PUSTYDOKUMENT();
-
-
-                }
-                else {
-                    System.out.println("File selection cancelled.");
-                }
-            }
-        });*/
-
-
     }
 
     private final org.jpedal.PdfDecoderFX pdf = new org.jpedal.PdfDecoderFX();
@@ -235,25 +214,14 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
     }
 
     String PDFfile;
-
-    //Variable to hold the current file/directory
-    File file;
-
-    //These two variables are todo with PDF encryption & passwords
     private String password; //Holds the password from the JVM or from User input
     private boolean closePasswordPrompt; //boolean controls whether or not we should close the prompt box
 
 
-     Layout panes;
     private VBox top;
-    private HBox bottom;
     private ScrollPane center;
-    //Group is a container which holds the decoded PDF content
     private Group group;
 
-    // for the location of the pdf file
-    //
-    private Text fileLoc;
 
     private float scale = 1.0f;
 
@@ -267,16 +235,8 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
     private int currentPage = 1;
 
-    //Stage stage;
-
-    //Scene scene;
-
-    //Controls size of the stage, in theory setting this to a higher value will
-    //increase image quality as there's more pixels due to higher image resolutions
-    static final int FXscaling=1;
-
     FitToPage zoomMode = FitToPage.AUTO;
-    public void setupViewer(final int w, final int h, BorderPane root){
+    public void setupViewer(BorderPane root){
         top = new VBox();
 
         root.setTop(top);
@@ -305,80 +265,10 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         root.setRight(rightPane);
     }
 
-    public void addListeners(){
-
-
-        /*
-         * auto adjust so dynamically resized as viewer width alters
-         */
-        finishBttn.getScene().widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(final ObservableValue<? extends Number> observableValue, final Number oldSceneWidth, final Number newSceneWidth) {
-
-                //fitToX(zoomMode);
-
-            }
-        });
-
-        finishBttn.getScene().heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(final ObservableValue<? extends Number> observableValue, final Number oldSceneHeight, final Number newSceneHeight) {
-
-               // fitToX(zoomMode);
-
-            }
-        });
-
-        /*
-         * Controls for dragging a PDF into the scene
-         * Using the dragboard, which extends the clipboard class,
-         * detect a file being dragged onto the scene and if the user drops the file
-         * we load it.
-         */
-        finishBttn.getScene().setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(final DragEvent event) {
-                final Dragboard db = event.getDragboard();
-                if (db.hasFiles()) {
-                    event.acceptTransferModes(TransferMode.COPY);
-                } else {
-                    event.consume();
-                }
-            }
-        });
-
-        finishBttn.getScene().setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(final DragEvent event) {
-                final Dragboard db = event.getDragboard();
-                boolean success = false;
-                if(db.hasFiles()){
-                    success = true;
-                    // Only get the first file from the list
-                    file = db.getFiles().get(0);
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadPDF(file);
-                        }
-                    });
-                }
-                event.setDropCompleted(success);
-                event.consume();
-            }
-        });
-    }
-
-    /**
-     * Sets up a MenuBar to be used at the top of the window.
-     * It contains one Menu - navMenu - which allows the user to open and navigate pdf files
-     * @return
-     */
     private ToolBar setupToolBar() {
 
         final ToolBar toolbar = new ToolBar();
 
-        final Button open = new Button("Open");
         final Button back = new Button("Back");
         final ComboBox<String> pages = new ComboBox<String>();
         final Label pageCount = new Label();
@@ -389,9 +279,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         final Button fitHeight = new Button("Fit to Height");
         final Button fitPage = new Button("Fit to Page");
 
-        ComboBox<String> transitionList = new ComboBox<String>();
-
-        open.setId("open");
         back.setId("back");
         pageCount.setId("pgCount");
         pages.setId("pages");
@@ -402,39 +289,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         fitHeight.setId("fitHeight");
         fitPage.setId("fitPage");
 
-        /*
-         * Open the PDF File
-         */
-        open.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(final ActionEvent t) {
-                final FileChooser chooser = new FileChooser();
-                chooser.setTitle("Open PDF file");
-
-                //Open directory from existing directory
-                if(file != null){
-                    final File existDirectory = file.getParentFile();
-                    if(existDirectory.exists()) {
-                        chooser.setInitialDirectory(existDirectory);
-                    }
-                }
-
-                //Set extension filter
-                final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-                chooser.getExtensionFilters().add(extFilter);
-
-                file = chooser.showOpenDialog(null);
-
-                if(file != null){
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadPDF(file);
-                        }
-                    });
-                }
-            }
-        });
 
         pages.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(final ObservableValue<? extends Number> ov, final Number oldVal, final Number newVal) {
@@ -568,18 +422,8 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
             options.add(transition.name());
         }
 
-        if(!options.isEmpty()){
-            transitionList = new ComboBox<String>(options);
-            // Put before setValue so that setValue triggers the event
-            transitionList.valueProperty().addListener(new ChangeListener<String>(){
-                @Override public void changed(final ObservableValue<? extends String> ov, final String oldVal, final String newVal) {
-                    transitionType = FXViewerTransitions.TransitionType.valueOf(newVal);
-                }});
 
-            transitionList.setValue(options.get(transitionType.ordinal()));
-        }
-
-        toolbar.getItems().addAll(open, spacerLeft, back, pages, pageCount, forward, zoomIn, zoomOut, spacerRight, transitionList);
+        toolbar.getItems().addAll(spacerLeft, back, pages, pageCount, forward, zoomIn, zoomOut, spacerRight);
 
         return toolbar;
     }
@@ -600,28 +444,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
        // fileLoc.setText(PDFfile);
 
         openFile(input,null,false);
-
-    }
-
-    /**
-     * take a File handle to PDF file on local filesystem and displays in PDF viewer
-     * @param input The PDF file to load in the viewer
-     */
-    public void loadPDF(final String input){
-
-        if(input == null) {
-            return;
-        }
-
-        scale = 1; //reset to default for new page
-        PDFfile=input;
-        fileLoc.setText(PDFfile);
-
-        if(input.startsWith("http")){
-            openFile(null, input,true);
-        }else{
-            openFile(new File(input),null,false);
-        }
 
     }
 
@@ -703,78 +525,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
 
     }
 
-
-   /* private void showPasswordPrompt(final int passwordCount){
-
-        //Setup password prompt content
-        final Text titleText = new Text("Password Request");
-        final TextField inputPasswordField = new TextField("Please Enter Password");
-
-        //If the user has attempted to enter the password more than once, change the text
-        if(passwordCount >= 1){
-            titleText.setText("Incorrect Password");
-            inputPasswordField.setText("Please Try Again");
-        }
-
-        final FXInputDialog passwordInput = new FXInputDialog(stage, titleText.getText()){
-            @Override
-            protected void positiveClose(){
-                super.positiveClose();
-                closePasswordPrompt = true;
-            }
-        };
-
-        password = passwordInput.showInputDialog();
-
-    }*/
-
-   /* private void fitToX(final FitToPage fitToPage) {
-
-        if(fitToPage == FitToPage.NONE) {
-            return;
-        }
-
-        final float pageW=pdf.getPdfPageData().getCropBoxWidth2D(currentPage);
-        final float pageH=pdf.getPdfPageData().getCropBoxHeight2D(currentPage);
-        final int rotation = pdf.getPdfPageData().getRotation(currentPage);
-
-        //Handle how we auto fit the content to the page
-        if(fitToPage == FitToPage.AUTO && (pageW < pageH)){
-            if(pdf.getPDFWidth()<pdf.getPDFHeight()) {
-                fitToX(FitToPage.HEIGHT);
-            }
-            else {
-                fitToX(FitToPage.WIDTH);
-            }
-        }
-
-        //Handle how we fit the content to the page width or height
-        if(fitToPage == FitToPage.WIDTH){
-            final float width=(float) (finishBttn.getScene().getWidth());
-            if(rotation==90 || rotation==270){
-                scale = (width - insetX - insetX) / pageH;
-            }else{
-                scale = (width - insetX - insetX) / pageW;
-            }
-        }else if(fitToPage == FitToPage.HEIGHT){
-            final float height=(float) (finishBttn.getScene().getHeight()-top.getBoundsInLocal().getHeight()-bottom.getHeight());
-
-            if(rotation==90 || rotation==270){
-                scale = (height - insetY - insetY) / pageW;
-            }else{
-                scale = (height - insetY - insetY) / pageH;
-            }
-        }
-
-        pdf.setPageParameters(scale, currentPage);
-    }*/
-
-    /**
-     * Locate scaling value closest to current scaling setting
-     * @param scale
-     * @param scalings
-     * @return int
-     */
     private static int findClosestIndex(final float scale, final float[] scalings) {
         float currentMinDiff = Float.MAX_VALUE;
         int closest = 0;
@@ -901,10 +651,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
     /**
      * @return the case sensitive full path and name of the PDF file
      */
-    public String getPDFfilename() {
-        return PDFfile;
-    }
-
     private void adjustPagePosition(final Bounds nb){
         // (new scrollbar width / 2) - (page width / 2)
         double adjustment = ((nb.getWidth() / 2) - (group.getBoundsInLocal().getWidth() /2));
@@ -923,10 +669,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         final double y = (rotation == 90 || rotation == 270) ? 0 : 40;
         final DropShadow pdfBorder = new DropShadow(0, x,y, Color.TRANSPARENT);
         pdf.setEffect(pdfBorder);
-    }
-
-    public void addExternalHandler(PluginHandler customPluginHandle){
-        this.customPluginHandle=customPluginHandle;
     }
 
     @Override
