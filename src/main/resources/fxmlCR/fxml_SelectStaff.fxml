@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mkyong.controllers.SelectStaffController">
+   <left>
+      <BorderPane fx:id="leftPane" prefHeight="599.0" prefWidth="557.5" BorderPane.alignment="CENTER">
+         <right>
+            <AnchorPane prefHeight="599.0" prefWidth="307.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="addLbl" layoutX="25.0" layoutY="115.0" prefHeight="21.0" prefWidth="129.0" text="Dodaj Kierowce" />
+                  <Button fx:id="addBttn" disable="true" layoutX="167.0" layoutY="110.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="OK" />
+                  <Button fx:id="backBttn" layoutX="25.0" layoutY="484.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="67.0" text="Wroc" />
+               </children>
+            </AnchorPane>
+         </right>
+      </BorderPane>
+   </left>
+   <right>
+      <BorderPane fx:id="rightPane" prefHeight="599.0" prefWidth="557.5" BorderPane.alignment="CENTER">
+         <left>
+            <AnchorPane prefHeight="538.0" prefWidth="281.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="deleteLbl" layoutX="39.0" layoutY="117.0" prefHeight="21.0" prefWidth="128.0" text="Usun Kierowce" />
+                  <Button fx:id="deleteBttn" disable="true" layoutX="170.0" layoutY="112.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="81.0" text="OK" />
+                  <Button fx:id="contBttn" layoutX="183.0" layoutY="485.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="68.0" text="Dalej" />
+               </children>
+            </AnchorPane>
+         </left>
+      </BorderPane>
+   </right>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <AnchorPane fx:id="topPane" prefHeight="61.0" prefWidth="1115.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="titleLbl" alignment="CENTER" layoutX="229.0" layoutY="14.0" prefHeight="34.0" prefWidth="637.0" text="WYBIERZ DOSTEPNYCH KIEROWCOW DO TRASY">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="pickLbl" layoutX="59.0" layoutY="31.0" prefHeight="21.0" prefWidth="162.0" text="Dostepni kierowcy:" />
+            <Label fx:id="pickedLbl" layoutX="910.0" layoutY="31.0" prefHeight="21.0" prefWidth="171.0" text="Wybrani Kierowcy:" />
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

@@ -50,6 +50,12 @@ public class Main extends Application {
 	 public static final String SELECTROUTE = "selectroute";
 	 public static final String SELECTROUTE_FXML = "/fxmlCR/fxml_SelectRoute.fxml";
 
+	public static final String SELECTSTAFF = "selectstaff";
+	public static final String SELECTSTAFF_FXML = "/fxmlCR/fxml_SelectStaff.fxml";
+	
+	public static final String SELECTCARS = "selectcars";
+	public static final String SELECTCARS_FXML = "/fxmlCR/fxml_SelectCars.fxml";
+
 	public static final String VIEWWORKERS = "viewworkers";
 	public static final String VIEWWORKERS_FXML = "/fxmlCR/fxml_viewWorkers.fxml";
 
@@ -58,6 +64,11 @@ public class Main extends Application {
 
 	public static final String WORKERSDOCUMENTS = "workersdocuments";
 	public static final String WORKERSDOCUMENTS_FXML = "/fxmlCR/fxml_WorkersDocuments.fxml";
+
+	public static final String ROUTERESULTS = "routeresults";
+	public static final String ROUTERESULTS_FXML = "/fxmlCR/fxml_RouteResults.fxml";
+	
+	
 
 
 
@@ -83,6 +94,9 @@ public class Main extends Application {
 			mainContainer.loadScreen(Main.VIEWWORKERS, Main.VIEWWORKERS_FXML);
 			mainContainer.loadScreen(Main.VIEWCARS, Main.VIEWCARS_FXML);
 			mainContainer.loadScreen(Main.WORKERSDOCUMENTS, Main.WORKERSDOCUMENTS_FXML);
+			mainContainer.loadScreen(Main.SELECTSTAFF, Main.SELECTSTAFF_FXML);
+			mainContainer.loadScreen(Main.SELECTCARS, Main.SELECTCARS_FXML);
+			mainContainer.loadScreen(Main.ROUTERESULTS, Main.ROUTERESULTS_FXML);
 
 		    mainContainer.setScreen(Main.LOGIN);
 							

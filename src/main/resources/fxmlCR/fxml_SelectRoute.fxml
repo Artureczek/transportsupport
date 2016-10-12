@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
@@ -13,23 +12,20 @@
    <left>
       <AnchorPane fx:id="anchorpane" prefHeight="599.0" prefWidth="261.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="fromTextField" layoutX="56.0" layoutY="32.0" prefHeight="25.0" prefWidth="149.0" promptText="Lokacja startowa" />
-            <TextField fx:id="toTextField" layoutX="56.0" layoutY="69.0" promptText="Lokacja Koncowa" />
-            <Button fx:id="showBttn" layoutX="81.0" layoutY="103.0" mnemonicParsing="false" text="Pokaz na mapie" />
-            <ChoiceBox fx:id="truckNumBox" layoutX="56.0" layoutY="209.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="driversNumBox" layoutX="56.0" layoutY="275.0" prefWidth="150.0" />
-            <RadioButton fx:id="prioTimeBttn" layoutX="56.0" layoutY="358.0" mnemonicParsing="false" text="Czas" />
-            <RadioButton fx:id="prioCostBttn" layoutX="56.0" layoutY="382.0" mnemonicParsing="false" text="Koszt" />
-            <Button fx:id="designateBttn" layoutX="148.0" layoutY="517.0" mnemonicParsing="false" text="Wyznacz trase" />
-            <Label fx:id="distanceLabel" layoutX="48.0" layoutY="138.0" prefHeight="28.0" prefWidth="166.0" text="Odleglosc: ">
+            <TextField fx:id="fromTextField" layoutX="46.0" layoutY="29.0" prefHeight="31.0" prefWidth="187.0" promptText="Lokacja startowa" />
+            <TextField fx:id="toTextField" disable="true" layoutX="46.0" layoutY="69.0" promptText="Lokacja Koncowa" />
+            <Button fx:id="showBttn" disable="true" layoutX="78.0" layoutY="116.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="122.0" text="Wyznacz trase" />
+            <RadioButton fx:id="prioTimeBttn" layoutX="47.0" layoutY="280.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="83.0" text="Czas" />
+            <RadioButton fx:id="prioCostBttn" layoutX="47.0" layoutY="252.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="79.0" selected="true" text="Koszt" />
+            <Button fx:id="continueBttn" disable="true" layoutX="139.0" layoutY="517.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="Dalej" />
+            <Label fx:id="distanceLabel" layoutX="47.0" layoutY="165.0" prefHeight="28.0" prefWidth="166.0" text="Odleglosc: ">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="truckLabel" layoutX="56.0" layoutY="186.0" prefHeight="17.0" prefWidth="181.0" text="Licza dostepnych pojazdow:" />
-            <Label fx:id="driversLabel" layoutX="56.0" layoutY="251.0" prefHeight="17.0" prefWidth="184.0" text="Liczba dostepnych kierowcow:" />
-            <Label fx:id="prioLabel" layoutX="56.0" layoutY="328.0" prefHeight="17.0" prefWidth="147.0" text="Priorytet transportu:" />
+            <Label fx:id="prioLabel" layoutX="47.0" layoutY="223.0" prefHeight="17.0" prefWidth="147.0" text="Priorytet transportu:" />
             <Button fx:id="backBttn" layoutX="30.0" layoutY="517.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Wroc" />
+            <TextField fx:id="sizeTxtFld" disable="true" layoutX="48.0" layoutY="336.0" prefHeight="31.0" prefWidth="182.0" promptText="Objetosc towaru [L]" />
          </children></AnchorPane>
    </left>
 </BorderPane>

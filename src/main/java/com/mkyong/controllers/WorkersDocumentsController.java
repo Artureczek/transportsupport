@@ -113,8 +113,6 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
         documentsListView.setItems( items);
         documentsListView.getSelectionModel().select(0);
         deleteDocBttn.setDisable(true);
-        progressIndicator = new ProgressIndicator();
-        progressIndicator.
         setupViewer(pane);
 
 

@@ -70,6 +70,33 @@ public class ViewCarsMethods {
 
     }
 
+    public static List<POJAZD> getCarsByPlate(List<String> plateList) {
+
+        List<POJAZD> returnList = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            session.beginTransaction();
+            for(String plate : plateList) {
+                String hql = "FROM POJAZD P WHERE P.nrRejestracji =:numerRejestracyjny";
+                Query query = session.createQuery(hql).setParameter("numerRejestracyjny", plate.split(" ")[1]).setMaxResults(1);
+                List results = query.list();
+
+                for (Iterator iterator = results.iterator(); iterator.hasNext(); ) {
+                    POJAZD returnPojazd = (POJAZD) iterator.next();
+                    returnList.add(returnPojazd);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            session.close();
+        }
+        return returnList;
+
+    }
+
     public static void saveCar(POJAZD pracownik){
 
         Session session = HibernateUtil.getSessionFactory().openSession();

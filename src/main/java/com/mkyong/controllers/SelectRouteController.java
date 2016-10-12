@@ -10,7 +10,9 @@ import com.lynden.gmapsfx.service.elevation.ElevationStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
+import com.mkyong.transport.PRACOWNIK;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import com.mkyong.main.*;
@@ -30,9 +33,29 @@ import com.mkyong.controlMethods.*;
 public class SelectRouteController implements Initializable, ControlledScreen, MapComponentInitializedListener,
         ElevationServiceCallback, GeocodingServiceCallback, DirectionsServiceCallback {
 
+    @FXML
+    private BorderPane pane;
 
     @FXML
     private AnchorPane anchorpane;
+
+    @FXML
+    private TextField fromTextField;
+
+    @FXML
+    private TextField toTextField;
+
+    @FXML
+    private Button showBttn;
+
+    @FXML
+    private RadioButton prioTimeBttn;
+
+    @FXML
+    private RadioButton prioCostBttn;
+
+    @FXML
+    private Button continueBttn;
 
     @FXML
     private Label distanceLabel;
@@ -41,40 +64,10 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
     private Label prioLabel;
 
     @FXML
-    private Button designateBttn;
-
-    @FXML
-    private Button showBttn;
-
-    @FXML
-    private ChoiceBox<Integer> truckNumBox;
-
-    @FXML
-    private TextField fromTextField;
-
-    @FXML
-    private ChoiceBox<Integer> driversNumBox;
-
-    @FXML
-    private Label truckLabel;
-
-    @FXML
-    private Label driversLabel;
-
-    @FXML
-    private RadioButton prioTimeBttn;
-
-    @FXML
-    private BorderPane pane;
-
-    @FXML
-    private RadioButton prioCostBttn;
+    private TextField sizeTxtFld;
 
     @FXML
     private Button backBttn;
-
-    @FXML
-    private TextField toTextField;
 
     ScreensController myController;
     final ToggleGroup group = new ToggleGroup();
@@ -86,6 +79,10 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
     protected DirectionsPane directions;
     protected DirectionsService ds;
     protected DirectionsRequest dr;
+    public static String startLocation;
+    public static String endLocation;
+    public static String priorytet;
+    public static int objetosc;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -94,20 +91,49 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
         mapView.addMapInializedListener(this);
 
         pane.setCenter(mapView);
-        truckNumBox.setItems(FXCollections.observableArrayList( 1,2,3,4,5,6,7,8 ));
-        driversNumBox.setItems(FXCollections.observableArrayList( 1,2,3,4,5,6,7,8 ));
-
         prioCostBttn.setToggleGroup(group);
         prioTimeBttn.setToggleGroup(group);
 
         showBttn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
+                sizeTxtFld.setDisable(false);
                 selectRoute();
             }
         });
 
+        fromTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!="")
+                toTextField.setDisable(false);
+            else
+                toTextField.setDisable(true);
+        });
+
+        toTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!="" && fromTextField.getText()!="")
+                showBttn.setDisable(false);
+            else
+                showBttn.setDisable(true);
+        });
+
+        sizeTxtFld.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!="")
+                continueBttn.setDisable(false);
+            else
+                continueBttn.setDisable(true);
+        });
+
         backBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.ROUTEMENU); } });
+        continueBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) {
+            setWorkerList();
+            myController.setScreen(Main.SELECTSTAFF);
+            startLocation = fromTextField.getText();
+            endLocation = toTextField.getText();
+            priorytet = ((RadioButton) group.getSelectedToggle()).getText();
+            objetosc = Integer.valueOf(sizeTxtFld.getText());
+            System.out.println(startLocation + " " + endLocation + " " + priorytet);
+
+        } });
 
     }
 
@@ -181,6 +207,20 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
 
     @Override
     public void geocodedResultsReceived(GeocodingResult[] geocodingResults, GeocoderStatus geocoderStatus) {
+
+    }
+
+    public static void setWorkerList(){
+
+        SelectStaffController.chooseList = ViewWorkersMethods.getWorkers();
+        SelectStaffController.chooseListValues = new ArrayList<>();
+        SelectStaffController.pickedListValues = new ArrayList<>();
+        SelectStaffController.pickedList = new ArrayList<>();
+        SelectStaffController.chooseList.stream().forEach(e-> SelectStaffController.chooseListValues.add(e.getImie() + " " + e.getNazwisko()));
+        SelectStaffController.chooseItems = FXCollections.observableArrayList (SelectStaffController.chooseListValues);
+        SelectStaffController.chooseListView.setItems(SelectStaffController.chooseItems);
+        SelectStaffController.pickedItems = FXCollections.observableArrayList (SelectStaffController.pickedListValues);
+        SelectStaffController.pickedListView.setItems(SelectStaffController.pickedItems);
 
     }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mkyong.controllers.RouteResultsController">
+   <children>
+      <Button fx:id="backBttn" layoutX="141.0" layoutY="504.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Wroc" />
+      <Button fx:id="saveBttn" layoutX="507.0" layoutY="504.0" mnemonicParsing="false" text="Zapisz Trase" />
+      <Button fx:id="endBttn" layoutX="925.0" layoutY="504.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="86.0" text="Zakoncz" />
+      <Label alignment="CENTER" layoutX="219.0" layoutY="27.0" prefHeight="39.0" prefWidth="677.0" text="REZULTAT OPTYMALIZACJI TRASY">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="fuelLbl" layoutX="124.0" layoutY="100.0" prefHeight="21.0" prefWidth="164.0" text="Koszt Paliwa: " />
+   </children>
+</AnchorPane>

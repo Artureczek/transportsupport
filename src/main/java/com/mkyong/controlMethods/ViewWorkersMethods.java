@@ -48,7 +48,7 @@ public class ViewWorkersMethods {
     public static PRACOWNIK getOneWorker(String imie, String nazwisko) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
-        PRACOWNIK returnPracownik = new PRACOWNIK();
+        PRACOWNIK returnPracownik;
         try {
             session.beginTransaction();
             String hql = "FROM PRACOWNIK P WHERE P.imie =:imie AND P.nazwisko =:nazwisko";
@@ -57,19 +57,42 @@ public class ViewWorkersMethods {
 
             for (Iterator iterator = results.iterator(); iterator.hasNext(); ) {
                 returnPracownik = (PRACOWNIK) iterator.next();
-
+                session.close();
+                return returnPracownik;
             }
-
-            //session.getTransaction().commit();
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
-        } finally {
-            session.close();
-            return returnPracownik;
         }
+        return null;
+    }
 
+    public static List<PRACOWNIK> getWorkersByNameAndSurname(List<String> names) {
+
+        List<PRACOWNIK> returnList = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        PRACOWNIK returnPracownik;
+        try {
+            session.beginTransaction();
+
+            for (String name : names) {
+                String hql = "FROM PRACOWNIK P WHERE P.imie =:imie AND P.nazwisko =:nazwisko";
+                Query query = session.createQuery(hql).setParameter("imie", name.split(" ")[0]).setParameter("nazwisko", name.split(" ")[1]).setMaxResults(1);
+                List results = query.list();
+
+                for (Iterator iterator = results.iterator(); iterator.hasNext(); ) {
+                    returnPracownik = (PRACOWNIK) iterator.next();
+                    returnList.add(returnPracownik);
+                }
+            }
+
+            } catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }finally {
+                session.close();
+            }
+        return returnList;
     }
 
     public static void saveWorker(PRACOWNIK pracownik){
