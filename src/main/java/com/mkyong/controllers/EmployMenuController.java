@@ -111,7 +111,7 @@ public class EmployMenuController implements Initializable, ControlledScreen
 
 	public static void setWorkerList(){
 
-		List<PRACOWNIK> pracownikList = ViewWorkersMethods.getWorkers();
+		List<PRACOWNIK> pracownikList = ViewWorkersMethods.getWorkers(false);
 		List<String> imieNaziwskoList = new ArrayList<>();
 		pracownikList.stream().forEach(e-> imieNaziwskoList.add(e.getImie() + " " + e.getNazwisko()));
 		ObservableList<String> items = FXCollections.observableArrayList (imieNaziwskoList);

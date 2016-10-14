@@ -74,7 +74,7 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
 
     public static MapOptions mapOptions;
     public static GoogleMapView mapView;
-    public static double distance;
+    public static Double distance;
     public static GoogleMap map;
     protected DirectionsPane directions;
     protected DirectionsService ds;
@@ -129,6 +129,7 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
             myController.setScreen(Main.SELECTSTAFF);
             startLocation = fromTextField.getText();
             endLocation = toTextField.getText();
+            distance = Double.valueOf(distanceLabel.getText().replace(" km", "").replace("Odleglosc: ", "").replace(" ",""));
             priorytet = ((RadioButton) group.getSelectedToggle()).getText();
             objetosc = Integer.valueOf(sizeTxtFld.getText());
             System.out.println(startLocation + " " + endLocation + " " + priorytet);
@@ -191,18 +192,10 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
     @Override
     public void directionsReceived(DirectionsResult directionsResult, DirectionStatus directionStatus) {
 
-        List<DirectionsRoute> lista = directionsResult.getRoutes();
-        List<DirectionsLeg> lista2 = lista.get(0).getLegs();
-        List<DirectionsSteps> lista3 = lista2.get(0).getSteps();
-
-
-        distanceLabel.setText("Odleglosc: " + lista2.get(0).getDistance().getText());
-
     }
 
     @Override
     public void elevationsReceived(ElevationResult[] elevationResults, ElevationStatus elevationStatus) {
-
     }
 
     @Override
@@ -212,7 +205,7 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
 
     public static void setWorkerList(){
 
-        SelectStaffController.chooseList = ViewWorkersMethods.getWorkers();
+        SelectStaffController.chooseList = ViewWorkersMethods.getWorkers(true);
         SelectStaffController.chooseListValues = new ArrayList<>();
         SelectStaffController.pickedListValues = new ArrayList<>();
         SelectStaffController.pickedList = new ArrayList<>();

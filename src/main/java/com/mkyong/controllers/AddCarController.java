@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.fxml.Initializable;
@@ -74,17 +75,22 @@ public class AddCarController implements Initializable, ControlledScreen {
 		@FXML
 		private TextField registerTxtFld;
 
+		@FXML
+		private ChoiceBox<String> fuelChoiceBox;
+
 
 @Override
-public void initialize(URL arg0, ResourceBundle arg1) 
+public void initialize(URL arg0, ResourceBundle arg1)
 {
+	fuelChoiceBox.getItems().addAll("ON", "e95", "e98", "LPG");
+	fuelChoiceBox.getSelectionModel().selectFirst();
 	finishButton.setOnAction(new EventHandler<ActionEvent>() 
 	{
         @Override
         public void handle(ActionEvent arg0) 
         {
-        	 POJAZD car = new POJAZD(markaTextField.getText(), registerTxtFld.getText(), modelTextField.getText(), silnikTextField.getText(), Integer.valueOf(bakTextField.getText()),
-					 Integer.valueOf(ladowniaTextField.getText()), Float.valueOf(spalanieTextField.getText()), Main.activeUserEntity);
+        	 POJAZD car = new POJAZD(markaTextField.getText(), registerTxtFld.getText(), modelTextField.getText(), silnikTextField.getText(), Long.valueOf(bakTextField.getText()),
+					 Long.valueOf(ladowniaTextField.getText()), Double.valueOf(spalanieTextField.getText()), fuelChoiceBox.getSelectionModel().getSelectedItem(), Main.activeUserEntity);
 
 			boolean result = AddCarMethods.Validate(car);
 

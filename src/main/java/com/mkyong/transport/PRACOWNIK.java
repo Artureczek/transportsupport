@@ -12,7 +12,7 @@ public class PRACOWNIK implements java.io.Serializable {
     @SequenceGenerator(name="PRACOWNIK_SEQ", sequenceName="PRACOWNIK_SEQ", allocationSize=1)
     @GeneratedValue (strategy = GenerationType.SEQUENCE, generator="PRACOWNIK_SEQ")
     @Column(name = "ID_PRACOWNIKA")
-    private int pracownikId;
+    private Long pracownikId;
 
     @Column(name = "IMIE")
     private String imie;
@@ -24,10 +24,13 @@ public class PRACOWNIK implements java.io.Serializable {
     private String pesel;
 
     @Column(name = "STAWKA")
-    private Float stawka;
+    private Long stawka;
 
     @Column(name = "DATA_URODZENIA")
     private Date dataUrodzenia;
+
+    @Column(name = "CZY_KIEROWCA")
+    private Boolean czyKierowca;
 
 
     @JoinColumn(name = "ID_USER")
@@ -37,21 +40,26 @@ public class PRACOWNIK implements java.io.Serializable {
     public PRACOWNIK() {
     }
 
-    public PRACOWNIK(String imie, String nazwisko, String pesel, Float stawka, Date dataurodzenia, APPUSER iduser) {
+    public PRACOWNIK(String imie, String nazwisko, String pesel, Long stawka, Date dataurodzenia, Boolean czyKierowca, APPUSER iduser) {
 
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.pesel = pesel;
         this.stawka = stawka;
         this.dataUrodzenia = dataurodzenia;
+        this.czyKierowca = czyKierowca;
         this.user = iduser;
     }
 
-    public int getPracownikId() {
+    public Boolean getCzyKierowca() { return czyKierowca; }
+
+    public void setCzyKierowca(Boolean czyKierowca) { this.czyKierowca = czyKierowca; }
+
+    public Long getPracownikId() {
         return pracownikId;
     }
 
-    public void setPracownikId(int pracownikId) {
+    public void setPracownikId(Long pracownikId) {
         this.pracownikId = pracownikId;
     }
 
@@ -79,9 +87,9 @@ public class PRACOWNIK implements java.io.Serializable {
         this.pesel = pesel;
     }
 
-    public Float getStawka() { return stawka; }
+    public Long getStawka() { return stawka; }
 
-    public void setStawka(Float stawka) {
+    public void setStawka(Long stawka) {
         this.stawka = stawka;
     }
 

@@ -9,7 +9,7 @@ public class TRASAPRACOWNIK implements java.io.Serializable {
     @SequenceGenerator(name = "TRASA_PRACOWNIK_SEQ", sequenceName = "TRASA_PRACOWNIK_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRASA_PRACOWNIK_SEQ")
     @Column(name = "ID_TRASY_PRACOWNIK")
-    private int trasaPojazdId;
+    private Long trasaPojazdId;
 
     @JoinColumn(name = "ID_TRASY")
     @ManyToOne
@@ -19,4 +19,35 @@ public class TRASAPRACOWNIK implements java.io.Serializable {
     @ManyToOne
     private PRACOWNIK pracownik;
 
+    public TRASAPRACOWNIK() {
+    }
+
+    public TRASAPRACOWNIK(TRASA trasa, PRACOWNIK pracownik) {
+        this.trasa = trasa;
+        this.pracownik = pracownik;
+    }
+
+    public Long getTrasaPojazdId() {
+        return trasaPojazdId;
+    }
+
+    public void setTrasaPojazdId(Long trasaPojazdId) {
+        this.trasaPojazdId = trasaPojazdId;
+    }
+
+    public TRASA getTrasa() {
+        return trasa;
+    }
+
+    public void setTrasa(TRASA trasa) {
+        this.trasa = trasa;
+    }
+
+    public PRACOWNIK getPracownik() {
+        return pracownik;
+    }
+
+    public void setPracownik(PRACOWNIK pracownik) {
+        this.pracownik = pracownik;
+    }
 }

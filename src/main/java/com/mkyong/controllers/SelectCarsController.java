@@ -6,6 +6,7 @@ import com.mkyong.controlMethods.ViewWorkersMethods;
 import com.mkyong.main.Main;
 import com.mkyong.transport.POJAZD;
 import com.mkyong.transport.PRACOWNIK;
+import com.mkyong.transport.TRASAPOJAZD;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -86,14 +87,14 @@ public class SelectCarsController implements Initializable, ControlledScreen {
     public static List<String> chooseListValues;
     public static ObservableList<String> chooseItems;
     public static ObservableList<String> pickedItems;
-    public static int sumOfCapacity;
+    public static Long sumOfCapacity;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         chooseListView = new ListView<>();
         pickedListView = new ListView<>();
-        sumOfCapacity = 0;
+        sumOfCapacity = 0L;
         leftPane.setLeft(chooseListView);
         rightPane.setRight(pickedListView);
 
@@ -103,14 +104,24 @@ public class SelectCarsController implements Initializable, ControlledScreen {
 
             pickedList = ViewCarsMethods.getCarsByPlate(pickedListValues);
             //pickedList.stream().forEach(e-> System.out.println(e.getMarka() + " " + e.getNrRejestracji()));
-            sumOfCapacity = pickedList.stream().mapToInt(POJAZD::getPojemnoscLadowni).sum();
+            sumOfCapacity = pickedList.stream().mapToLong(POJAZD::getPojemnoscLadowni).sum();
 
-            RouteResultsMethods.chooseCars(pickedList, SelectRouteController.objetosc ,"Koszt");
+            RouteResultsController.selectedCars = RouteResultsMethods.chooseCars(pickedList, SelectRouteController.objetosc ,"Koszt", SelectStaffController.pickedList.size());
+            RouteResultsController.selectedDrivers = RouteResultsMethods.chooseDrivers(SelectStaffController.pickedList, RouteResultsController.selectedCars, "Koszt");
 
             if(SelectRouteController.objetosc>sumOfCapacity) {
+                errorLbl.setText("Laczna pojemnosc wybranych pojazdow jest mniejsza niz wpisana objetosc towaru!");
+                errorLbl.setVisible(true);
+            }else if(RouteResultsController.selectedCars == null) {
+                errorLbl.setText("Brak mozliwosci obsadzenia wystarczajacej liczby pojazdow!");
                 errorLbl.setVisible(true);
             }else{
                 errorLbl.setVisible(false);
+                setPickedList();
+                RouteResultsMethods.setDBObjects();
+                Double fuel = RouteResultsController.trasapojazdList.stream().mapToDouble(TRASAPOJAZD::getKosztPaliwa).sum();
+                RouteResultsController.fuelLabel.setText("Calkowity Koszt Paliwa: " + fuel.intValue() + " zl");
+                RouteResultsController.driversPerCarLabel.setText("Liczba kierowcow na 1 pojazd: " + (RouteResultsController.selectedDrivers.size()/RouteResultsController.selectedCars.size()));
                 myController.setScreen(Main.ROUTERESULTS);
             }
 
@@ -156,6 +167,22 @@ public class SelectCarsController implements Initializable, ControlledScreen {
 
 
     }
+
+    public static void setPickedList(){
+
+        List<String> workersStringList = new ArrayList<>();
+        List<String> carsStringList = new ArrayList<>();
+        RouteResultsController.selectedCars.stream().forEach(e-> carsStringList.add(e.getMarka() + " " + e.getNrRejestracji()));
+        ObservableList <String> carsItems = FXCollections.observableArrayList (carsStringList);
+        RouteResultsController.selectedCarsListView.setItems(carsItems);
+
+        RouteResultsController.selectedDrivers.stream().forEach(e-> workersStringList.add(e.getImie() + " " + e.getNazwisko()));
+        ObservableList <String> workersItems = FXCollections.observableArrayList (workersStringList);
+        RouteResultsController.selectedDriversListView.setItems(workersItems);
+
+    }
+
+
 
     @Override
     public void setScreenParent(ScreensController screenPage) {

@@ -17,14 +17,18 @@ import java.util.List;
  */
 public class ViewWorkersMethods {
 
-    public static List<PRACOWNIK> getWorkers() {
+    public static List<PRACOWNIK> getWorkers(Boolean driversOnly) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<PRACOWNIK> returnPracownik = new ArrayList<>();
 
         try {
             session.beginTransaction();
-            String hql = "FROM PRACOWNIK P WHERE P.user =:user";
+            String hql;
+            if(driversOnly)
+                hql = "FROM PRACOWNIK P WHERE P.user =:user AND P.czyKierowca=true";
+            else
+                hql = "FROM PRACOWNIK P WHERE P.user =:user";
             Query query = session.createQuery(hql).setParameter("user", Main.activeUserEntity);
             List results = query.list();
 

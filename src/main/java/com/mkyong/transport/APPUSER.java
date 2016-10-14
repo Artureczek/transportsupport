@@ -11,7 +11,7 @@ public class APPUSER implements java.io.Serializable {
     @SequenceGenerator(name="APPUSER_SEQ", sequenceName="APPUSER_SEQ", allocationSize=1)
     @GeneratedValue (strategy = GenerationType.SEQUENCE, generator="APPUSER_SEQ")
     @Column(name = "ID_USER")
-    private int appUserId;
+    private Long appUserId;
 
     @Column(name = "NAZWAUZYTKOWNIKA")
     private String nazwaUzytkownika;
@@ -31,7 +31,7 @@ public class APPUSER implements java.io.Serializable {
     public APPUSER() {
     }
 
-    public APPUSER(/*int appUserId, */String nazwaUzytkownika, String imie,
+    public APPUSER(/*Long appUserId, */String nazwaUzytkownika, String imie,
                    String nazwisko, String email, String haslo) {
        /* this.appUserId = appUserId;*/
         this.nazwaUzytkownika = nazwaUzytkownika;
@@ -41,11 +41,11 @@ public class APPUSER implements java.io.Serializable {
         this.email = email;
     }
 
-    public int getappUserId() {
+    public Long getappUserId() {
         return this.appUserId;
     }
 
-    public void setappUserId(int appUserId) {
+    public void setappUserId(Long appUserId) {
         this.appUserId = appUserId;
     }
 

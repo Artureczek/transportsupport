@@ -524,7 +524,7 @@ public class WorkersDocumentsController implements Initializable, ControlledScre
     }
 
     private static int findClosestIndex(final float scale, final float[] scalings) {
-        float currentMinDiff = Float.MAX_VALUE;
+        float currentMinDiff = Long.MAX_VALUE;
         int closest = 0;
 
         for(int i = 0; i < scalings.length - 1; i++) {

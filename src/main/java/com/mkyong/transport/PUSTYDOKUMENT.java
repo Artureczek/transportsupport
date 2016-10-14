@@ -15,7 +15,7 @@ public class PUSTYDOKUMENT implements java.io.Serializable {
 
     @Id
     @Column(name = "ID_PUSTEGO_DOKUMENTU")
-    private int dokumentId;
+    private Long dokumentId;
 
     @Lob
     @Column(name = "PUSTY_DOKUMENT")
@@ -24,16 +24,16 @@ public class PUSTYDOKUMENT implements java.io.Serializable {
     public PUSTYDOKUMENT() {
     }
 
-    public PUSTYDOKUMENT(int dokumentId, byte[] dokument) {
+    public PUSTYDOKUMENT(Long dokumentId, byte[] dokument) {
         this.dokumentId = dokumentId;
         this.dokument = dokument;
     }
 
-    public int getDokumentId() {
+    public Long getDokumentId() {
         return dokumentId;
     }
 
-    public void setDokumentId(int dokumentId) {
+    public void setDokumentId(Long dokumentId) {
         this.dokumentId = dokumentId;
     }
 

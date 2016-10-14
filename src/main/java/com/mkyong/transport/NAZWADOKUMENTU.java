@@ -9,7 +9,7 @@ public class NAZWADOKUMENTU implements java.io.Serializable {
 
     @Id
     @Column(name = "ID_NAZWY_DOKUMENTU")
-    private int appUserId;
+    private Long appUserId;
 
     @Column(name = "NAZWA")
     private String nazwaDokumentu;
@@ -34,11 +34,11 @@ public class NAZWADOKUMENTU implements java.io.Serializable {
     }
 
 
-    public int getAppUserId() {
+    public Long getAppUserId() {
         return appUserId;
     }
 
-    public void setAppUserId(int appUserId) {
+    public void setAppUserId(Long appUserId) {
         this.appUserId = appUserId;
     }
 
@@ -53,7 +53,7 @@ public class NAZWADOKUMENTU implements java.io.Serializable {
     public NAZWADOKUMENTU() {
     }
 
-    public NAZWADOKUMENTU(int appUserId, String nazwaDokumentu) {
+    public NAZWADOKUMENTU(Long appUserId, String nazwaDokumentu) {
         this.appUserId = appUserId;
         this.nazwaDokumentu = nazwaDokumentu;
     }

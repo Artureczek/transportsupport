@@ -1,6 +1,10 @@
 package com.mkyong.transport;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -11,10 +15,10 @@ public class TRASA implements java.io.Serializable {
     @SequenceGenerator(name="TRASA_SEQ", sequenceName="TRASA_SEQ", allocationSize=1)
     @GeneratedValue (strategy = GenerationType.SEQUENCE, generator="TRASA_SEQ")
     @Column(name = "ID_TRASY")
-    private int trasaId;
+    private Long trasaId;
 
     @Column(name = "ODLEGLOSC")
-    private int odleglosc;
+    private Double odleglosc;
 
     @Column(name = "LOKACJA_STARTOWA")
     private String lokacjaStartowa;
@@ -22,14 +26,22 @@ public class TRASA implements java.io.Serializable {
     @Column(name = "LOKACJA_KONCOWA")
     private String lokacjaKoncowa;
 
-    @Column(name = "PRIORYTER")
+    @Column(name = "PRIORYTET")
     private String priorytet;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "trasa", fetch = FetchType.EAGER)
+    private Set<TRASAPOJAZD> pojazdy = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "trasa", fetch = FetchType.EAGER)
+    private Set<TRASAPRACOWNIK> kierowcy = new HashSet<>();
 
     @JoinColumn(name = "ID_USER")
     @ManyToOne
     private APPUSER user;
 
-    public TRASA(int odleglosc, String lokacjaStartowa, String lokacjaKoncowa, String priorytet, APPUSER user) {
+    public TRASA(Double odleglosc, String lokacjaStartowa, String lokacjaKoncowa, String priorytet, APPUSER user) {
         this.odleglosc = odleglosc;
         this.lokacjaStartowa = lokacjaStartowa;
         this.lokacjaKoncowa = lokacjaKoncowa;
@@ -37,22 +49,15 @@ public class TRASA implements java.io.Serializable {
         this.user = user;
     }
 
-    public TRASA() {
-    }
+    public TRASA() {    }
 
-    public int getTrasaId() {
-        return trasaId;
-    }
+    public Long getTrasaId() {        return trasaId;    }
 
-    public void setTrasaId(int trasaId) {
-        this.trasaId = trasaId;
-    }
+    public void setTrasaId(Long trasaId) {        this.trasaId = trasaId;    }
 
-    public int getOdleglosc() {
-        return odleglosc;
-    }
+    public Double getOdleglosc() {        return odleglosc;    }
 
-    public void setOdleglosc(int odleglosc) {
+    public void setOdleglosc(Double odleglosc) {
         this.odleglosc = odleglosc;
     }
 
@@ -86,5 +91,21 @@ public class TRASA implements java.io.Serializable {
 
     public void setUser(APPUSER user) {
         this.user = user;
+    }
+
+    public Set<TRASAPOJAZD> getPojazdy() {
+        return pojazdy;
+    }
+
+    public void setPojazdy(Set<TRASAPOJAZD> pojazdy) {
+        this.pojazdy = pojazdy;
+    }
+
+    public Set<TRASAPRACOWNIK> getKierowcy() {
+        return kierowcy;
+    }
+
+    public void setKierowcy(Set<TRASAPRACOWNIK> kierowcy) {
+        this.kierowcy = kierowcy;
     }
 }

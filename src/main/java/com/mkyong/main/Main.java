@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	
-	 public static int activeUser = -1;
+	 public static Long activeUser = -1L;
 	 public static APPUSER activeUserEntity = null;
 	 static StackPane root;
 	 static Stage mystage;
@@ -67,11 +67,15 @@ public class Main extends Application {
 
 	public static final String ROUTERESULTS = "routeresults";
 	public static final String ROUTERESULTS_FXML = "/fxmlCR/fxml_RouteResults.fxml";
+
+	public static final String VIEWROUTES = "viewroutes";
+	public static final String VIEWROUTES_FXML = "/fxmlCR/fxml_viewRoutes.fxml";
+
+	public static final String VIEWROUTESMAP = "viewroutesmap";
+	public static final String VIEWROUTESMAP_FXML = "/fxmlCR/fxml_viewRoutesMap.fxml";
+
+
 	
-	
-
-
-
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -97,6 +101,8 @@ public class Main extends Application {
 			mainContainer.loadScreen(Main.SELECTSTAFF, Main.SELECTSTAFF_FXML);
 			mainContainer.loadScreen(Main.SELECTCARS, Main.SELECTCARS_FXML);
 			mainContainer.loadScreen(Main.ROUTERESULTS, Main.ROUTERESULTS_FXML);
+			mainContainer.loadScreen(Main.VIEWROUTES, Main.VIEWROUTES_FXML);
+			mainContainer.loadScreen(Main.VIEWROUTESMAP, Main.VIEWROUTESMAP_FXML);
 
 		    mainContainer.setScreen(Main.LOGIN);
 							

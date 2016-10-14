@@ -11,10 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
@@ -101,6 +98,12 @@ public class ViewCarsController implements Initializable, ControlledScreen {
     @FXML
     private Button deleteBttn;
 
+    @FXML
+    private ChoiceBox<String> fuelChoiceBox;
+
+    @FXML
+    private Button fuelBttn;
+
     public static ListView<String> carsListView;
     public static POJAZD selectedCar;
 
@@ -116,8 +119,10 @@ public class ViewCarsController implements Initializable, ControlledScreen {
 
         carsListView = new ListView<>();
         listPane.setCenter(carsListView);
+        fuelChoiceBox.getItems().addAll("ON", "e95", "e98", "LPG");
 
         markBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { markTxtFld.setEditable(true); }  });
+        fuelBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { fuelChoiceBox.setDisable(false); }  });
         modelBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { modelTxtFld.setEditable(true); }  });
         engineBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { engineTxtFld.setEditable(true); }  });
         tankCapacityBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { tankCapacityTxtFld.setEditable(true); }  });
@@ -134,10 +139,11 @@ public class ViewCarsController implements Initializable, ControlledScreen {
                     selectedCar.setMarka(markTxtFld.getText());
                     selectedCar.setModel(modelTxtFld.getText());
                     selectedCar.setSilnik(engineTxtFld.getText());
-                    selectedCar.setPojemnoscBaku(Integer.valueOf(tankCapacityTxtFld.getText()));
-                    selectedCar.setPojemnoscLadowni(Integer.valueOf(loadCapacityTxtFld.getText()));
-                    selectedCar.setSrednieSpalanie(Float.valueOf(avgConsTxtFld.getText()));
+                    selectedCar.setPojemnoscBaku(Long.valueOf(tankCapacityTxtFld.getText()));
+                    selectedCar.setPojemnoscLadowni(Long.valueOf(loadCapacityTxtFld.getText()));
+                    selectedCar.setSrednieSpalanie(Double.valueOf(avgConsTxtFld.getText()));
                     selectedCar.setNrRejestracji(registryTxtFld.getText());
+                    selectedCar.setRodzajPaliwa(fuelChoiceBox.getSelectionModel().getSelectedItem());
                     ViewCarsMethods.saveCar(selectedCar);
                     EmployMenuController.setWorkerList();
                 }
@@ -180,6 +186,13 @@ public class ViewCarsController implements Initializable, ControlledScreen {
                             loadCapacityTxtFld.setText(String.valueOf(selectedCar.getPojemnoscLadowni()));
                         if(selectedCar.getSrednieSpalanie()!=null)
                             avgConsTxtFld.setText(String.valueOf(selectedCar.getSrednieSpalanie()));
+
+                        if(selectedCar.getRodzajPaliwa()!=null){
+                            for(String fuel : fuelChoiceBox.getItems()){
+                                if(selectedCar.getRodzajPaliwa().equals(fuel))
+                                    fuelChoiceBox.getSelectionModel().select(fuel);
+                            }
+                        }
 
 
                     }

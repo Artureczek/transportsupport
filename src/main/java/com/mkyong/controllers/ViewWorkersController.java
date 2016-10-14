@@ -94,6 +94,9 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
     @FXML
     private BorderPane listPane;
 
+    @FXML
+    private RadioButton isDriverRadioBttn;
+
     public static ListView<String> workersListView;
     public static PRACOWNIK selectedWorker;
 
@@ -136,7 +139,8 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
                     selectedWorker.setNazwisko(surnameTxtFld.getText());
                     selectedWorker.setDataUrodzenia(Date.from(birthDatePick.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
                     selectedWorker.setPesel(peselTxtFld.getText());
-                    selectedWorker.setStawka(Float.valueOf(wageTxtFld.getText()));
+                    selectedWorker.setStawka(Long.valueOf(wageTxtFld.getText()));
+                    selectedWorker.setCzyKierowca(isDriverRadioBttn.isSelected());
                     ViewWorkersMethods.saveWorker(selectedWorker);
                     EmployMenuController.setWorkerList();
                 }
@@ -177,6 +181,8 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
                         birthDatePick.setValue(selectedWorker.getDataUrodzenia().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                         if(selectedWorker.getStawka()!=null)
                         wageTxtFld.setText(String.valueOf(selectedWorker.getStawka()));
+                        if(selectedWorker.getCzyKierowca()!=null && selectedWorker.getCzyKierowca())
+                            isDriverRadioBttn.setSelected(true);
 
                     }
                 });

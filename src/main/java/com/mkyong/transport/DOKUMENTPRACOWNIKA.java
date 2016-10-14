@@ -12,7 +12,7 @@ public class DOKUMENTPRACOWNIKA implements java.io.Serializable {
     @SequenceGenerator(name="DOKUMENT_PRACOWNIKA_SEQ", sequenceName="DOKUMENT_PRACOWNIKA_SEQ", allocationSize=1)
     @GeneratedValue (strategy = GenerationType.SEQUENCE, generator="DOKUMENT_PRACOWNIKA_SEQ")
     @Column(name = "ID_DOKUMENTU")
-    private int dokumentId;
+    private Long dokumentId;
 
     @Lob
     @Column(name = "DOKUMENT")
@@ -38,7 +38,7 @@ public class DOKUMENTPRACOWNIKA implements java.io.Serializable {
     public DOKUMENTPRACOWNIKA() {
     }
 
-    public DOKUMENTPRACOWNIKA(int dokumentId, byte[] dokument, Boolean aktywny, PRACOWNIK pracownik, NAZWADOKUMENTU nazwadokumentu) {
+    public DOKUMENTPRACOWNIKA(Long dokumentId, byte[] dokument, Boolean aktywny, PRACOWNIK pracownik, NAZWADOKUMENTU nazwadokumentu) {
         this.dokumentId = dokumentId;
         this.dokument = dokument;
         this.aktywny = aktywny;
@@ -62,11 +62,11 @@ public class DOKUMENTPRACOWNIKA implements java.io.Serializable {
         this.rozszerzenieDokumentu = rozszerzenieDokumentu;
     }
 
-    public int getDokumentId() {
+    public Long getDokumentId() {
         return dokumentId;
     }
 
-    public void setDokumentId(int dokumentId) {
+    public void setDokumentId(Long dokumentId) {
         this.dokumentId = dokumentId;
     }
 

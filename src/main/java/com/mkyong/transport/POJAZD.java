@@ -14,7 +14,7 @@ import java.util.Date;
         @SequenceGenerator(name="POJAZD_SEQ", sequenceName="POJAZD_SEQ", allocationSize=1)
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="POJAZD_SEQ")
         @Column(name = "ID_POJAZDU")
-        private int pojazdId;
+        private Long pojazdId;
 
         @Column(name = "MARKA_POJAZDU")
         private String marka;
@@ -29,13 +29,16 @@ import java.util.Date;
         private String silnik;
 
         @Column(name = "POJEMNOSC_BAKU")
-        private int pojemnoscBaku;
+        private Long pojemnoscBaku;
 
         @Column(name = "POJEMNOSC_LADOWNI")
-        private int pojemnoscLadowni;
+        private Long pojemnoscLadowni;
 
         @Column(name = "SREDNIE_SPALANIE")
-        private Float srednieSpalanie;
+        private Double srednieSpalanie;
+
+        @Column(name = "RODZAJ_PALIWA")
+        private String rodzajPaliwa;
 
         @JoinColumn(name = "ID_USER")
         @ManyToOne
@@ -43,7 +46,7 @@ import java.util.Date;
 
     public POJAZD() {}
 
-    public POJAZD(String marka, String nrRejestracji, String model, String silnik, int pojemnoscBaku, int pojemnoscLadowni, Float srednieSpalanie, APPUSER user) {
+    public POJAZD(String marka, String nrRejestracji, String model, String silnik, Long pojemnoscBaku, Long pojemnoscLadowni, Double srednieSpalanie, String rodzajPaliwa, APPUSER user) {
         this.marka = marka;
         this.nrRejestracji = nrRejestracji;
         this.model = model;
@@ -51,18 +54,23 @@ import java.util.Date;
         this.pojemnoscBaku = pojemnoscBaku;
         this.pojemnoscLadowni = pojemnoscLadowni;
         this.srednieSpalanie = srednieSpalanie;
+        this.rodzajPaliwa = rodzajPaliwa;
         this.user = user;
     }
+
+    public String getRodzajPaliwa() {  return rodzajPaliwa; }
+
+    public void setRodzajPaliwa(String rodzajPaliwa) { this.rodzajPaliwa = rodzajPaliwa; }
 
     public String getNrRejestracji() { return nrRejestracji; }
 
     public void setNrRejestracji(String nrRejestracji) { this.nrRejestracji = nrRejestracji; }
 
-    public int getPojazdId() {
+    public Long getPojazdId() {
         return pojazdId;
     }
 
-    public void setPojazdId(int pojazdId) {
+    public void setPojazdId(Long pojazdId) {
         this.pojazdId = pojazdId;
     }
 
@@ -90,27 +98,27 @@ import java.util.Date;
         this.silnik = silnik;
     }
 
-    public int getPojemnoscBaku() {
+    public Long getPojemnoscBaku() {
         return pojemnoscBaku;
     }
 
-    public void setPojemnoscBaku(int pojemnoscBaku) {
+    public void setPojemnoscBaku(Long pojemnoscBaku) {
         this.pojemnoscBaku = pojemnoscBaku;
     }
 
-    public int getPojemnoscLadowni() {
+    public Long getPojemnoscLadowni() {
         return pojemnoscLadowni;
     }
 
-    public void setPojemnoscLadowni(int pojemnoscLadowni) {
+    public void setPojemnoscLadowni(Long pojemnoscLadowni) {
         this.pojemnoscLadowni = pojemnoscLadowni;
     }
 
-    public Float getSrednieSpalanie() {
+    public Double getSrednieSpalanie() {
         return srednieSpalanie;
     }
 
-    public void setSrednieSpalanie(Float srednieSpalanie) { this.srednieSpalanie = srednieSpalanie; }
+    public void setSrednieSpalanie(Double srednieSpalanie) { this.srednieSpalanie = srednieSpalanie; }
 
     public APPUSER getUser() {
         return user;

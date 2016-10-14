@@ -6,10 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.time.Instant;
@@ -62,6 +59,9 @@ public class AddEmployeeController implements Initializable, ControlledScreen {
     
     @FXML
     private Button backButton;
+
+	@FXML
+	private RadioButton isDriverRadioBttn;
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -76,7 +76,7 @@ public class AddEmployeeController implements Initializable, ControlledScreen {
 	        	Instant instant = Instant.from(birthDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
 				Date date = Date.from(instant);
 				PRACOWNIK pracownik = new PRACOWNIK(nameTextField.getText(), surnameTextField.getText(), peselTextField.getText(),
-						Float.valueOf(salaryTextField.getText()), date, Main.activeUserEntity);
+						Long.valueOf(salaryTextField.getText()), date, isDriverRadioBttn.isSelected() , Main.activeUserEntity);
 
 				 boolean result = AddEmployeeMethods.Validate(pracownik);
 	        	 
