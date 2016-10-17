@@ -106,8 +106,8 @@ public class SelectCarsController implements Initializable, ControlledScreen {
             //pickedList.stream().forEach(e-> System.out.println(e.getMarka() + " " + e.getNrRejestracji()));
             sumOfCapacity = pickedList.stream().mapToLong(POJAZD::getPojemnoscLadowni).sum();
 
-            RouteResultsController.selectedCars = RouteResultsMethods.chooseCars(pickedList, SelectRouteController.objetosc ,"Koszt", SelectStaffController.pickedList.size());
-            RouteResultsController.selectedDrivers = RouteResultsMethods.chooseDrivers(SelectStaffController.pickedList, RouteResultsController.selectedCars, "Koszt");
+            RouteResultsController.selectedCars = RouteResultsMethods.chooseCars(pickedList, SelectRouteController.objetosc , SelectRouteController.priorytet, SelectStaffController.pickedList.size());
+            RouteResultsController.selectedDrivers = RouteResultsMethods.chooseDrivers(SelectStaffController.pickedList, RouteResultsController.selectedCars, SelectRouteController.priorytet);
 
             if(SelectRouteController.objetosc>sumOfCapacity) {
                 errorLbl.setText("Laczna pojemnosc wybranych pojazdow jest mniejsza niz wpisana objetosc towaru!");

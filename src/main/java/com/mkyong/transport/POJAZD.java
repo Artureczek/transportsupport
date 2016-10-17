@@ -26,7 +26,7 @@ import java.util.Date;
         private String model;
 
         @Column(name = "SILNIK_POJAZDU")
-        private String silnik;
+        private Double silnik;
 
         @Column(name = "POJEMNOSC_BAKU")
         private Long pojemnoscBaku;
@@ -46,7 +46,7 @@ import java.util.Date;
 
     public POJAZD() {}
 
-    public POJAZD(String marka, String nrRejestracji, String model, String silnik, Long pojemnoscBaku, Long pojemnoscLadowni, Double srednieSpalanie, String rodzajPaliwa, APPUSER user) {
+    public POJAZD(String marka, String nrRejestracji, String model, Double silnik, Long pojemnoscBaku, Long pojemnoscLadowni, Double srednieSpalanie, String rodzajPaliwa, APPUSER user) {
         this.marka = marka;
         this.nrRejestracji = nrRejestracji;
         this.model = model;
@@ -90,11 +90,9 @@ import java.util.Date;
         this.model = model;
     }
 
-    public String getSilnik() {
-        return silnik;
-    }
+    public Double getSilnik() {  return silnik;  }
 
-    public void setSilnik(String silnik) {
+    public void setSilnik(Double silnik) {
         this.silnik = silnik;
     }
 

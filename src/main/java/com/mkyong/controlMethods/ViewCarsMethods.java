@@ -1,16 +1,20 @@
 package com.mkyong.controlMethods;
 
+import com.mkyong.controllers.ViewCarsController;
 import com.mkyong.main.Main;
 import com.mkyong.transport.APPUSER;
 import com.mkyong.transport.POJAZD;
 import com.mkyong.transport.PRACOWNIK;
 import com.mkyong.util.HibernateUtil;
+import javafx.scene.control.ButtonType;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by artur on 09.10.2016.
@@ -122,6 +126,10 @@ public class ViewCarsMethods {
             session.beginTransaction();
             session.delete(merged);
             session.getTransaction().commit();
+
+        }catch (ConstraintViolationException cve){
+
+            ViewCarsController.usedCarAlert.showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();

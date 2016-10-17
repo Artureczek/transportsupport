@@ -99,6 +99,7 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
 
     public static ListView<String> workersListView;
     public static PRACOWNIK selectedWorker;
+    public static Alert usedWorkerAlert;
 
     ScreensController myController;
 
@@ -112,6 +113,11 @@ public class ViewWorkersController implements Initializable, ControlledScreen {
 
         workersListView = new ListView<>();
         listPane.setCenter(workersListView);
+
+        usedWorkerAlert = new Alert(Alert.AlertType.INFORMATION);
+        usedWorkerAlert.setTitle("Uwaga");
+        usedWorkerAlert.setHeaderText(null);
+        usedWorkerAlert.setContentText("Przed usunieciem pracownika nalezy usunac zapisane Trasy, w ktorych bral udzial");
 
         nameBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { nameTxtFld.setEditable(true); }  });
         surnameBttn.setOnAction(new EventHandler<ActionEvent>(){ @Override public void handle(ActionEvent arg0) { surnameTxtFld.setEditable(true); }  });

@@ -1,5 +1,7 @@
 package com.mkyong.controlMethods;
 
+import com.mkyong.controllers.ViewCarsController;
+import com.mkyong.controllers.ViewWorkersController;
 import com.mkyong.main.Main;
 import com.mkyong.transport.APPUSER;
 import com.mkyong.transport.DOKUMENTPRACOWNIKA;
@@ -7,6 +9,7 @@ import com.mkyong.transport.PRACOWNIK;
 import com.mkyong.util.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -126,6 +129,9 @@ public class ViewWorkersMethods {
             session.delete(merged);
             session.getTransaction().commit();
 
+
+        }catch (ConstraintViolationException cve){
+            ViewWorkersController.usedWorkerAlert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

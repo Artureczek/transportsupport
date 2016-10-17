@@ -35,7 +35,24 @@ public class RouteResultsMethods {
             }
             return  selectedDrivers;
 
-        }else{
+        }else if(parameter.equals("Czas")){
+
+            if(availableWorker.size()/selectedCars.size()>=2){
+
+                for(int i = 0; i < selectedCars.size(); i=i+2) {
+                    selectedDrivers.add(availableWorker.get(i));
+                    selectedDrivers.add(availableWorker.get(i+1));
+                }
+                return  selectedDrivers;
+
+            }else{
+
+                for(int i = 0; i < selectedCars.size(); i++) {
+                    selectedDrivers.add(availableWorker.get(i));
+                }
+                return  selectedDrivers;
+
+            }
 
         }
         return null;
@@ -47,9 +64,10 @@ public class RouteResultsMethods {
 
     public static List<POJAZD> chooseCars(List<POJAZD> availableCars, int loadSize, String parameter, int numberOfDrivers){
 
-        if(parameter.equals("Koszt")){
 
-            List<List<POJAZD>> listOfList = allSubsetsOfCars(availableCars, loadSize, numberOfDrivers);
+        List<List<POJAZD>> listOfList = allSubsetsOfCars(availableCars, loadSize, numberOfDrivers);
+
+        if(parameter.equals("Koszt")){
 
             if(listOfList.size()>0) {
                 Double minValue = listOfList.get(0).stream().mapToDouble(POJAZD::getSrednieSpalanie).sum();
@@ -69,11 +87,29 @@ public class RouteResultsMethods {
                 return null;
             }
         }
-        else{
+        else if(parameter.equals("Czas")){
 
-            return availableCars;
+            if(listOfList.size()>0) {
+                Double maxValue = (listOfList.get(0).stream().mapToDouble(POJAZD::getSilnik).sum())/listOfList.size();
+                List<POJAZD> selectedList = listOfList.get(0);
+                for (List<POJAZD> list : listOfList) {
+                    if ((list.stream().mapToDouble(POJAZD::getSilnik).sum())/list.size() > maxValue && list.size() <= selectedList.size()) {
+                        selectedList = list;
+                        maxValue = (selectedList.stream().mapToDouble(POJAZD::getSilnik).sum())/selectedList.size();
+                    } else if ((list.stream().mapToDouble(POJAZD::getSilnik).sum())/list.size() == maxValue && list.size() < selectedList.size()) {
+                        selectedList = list;
+                        maxValue = (selectedList.stream().mapToDouble(POJAZD::getSilnik).sum())/selectedList.size();
+                    }
+                }
+                selectedList.stream().forEach(e -> System.out.println(e.getMarka() + " " + e.getModel()));
+                return selectedList;
+            }else{
+                return null;
+            }
+
         }
 
+        return null;
 
     }
 
@@ -90,7 +126,7 @@ public class RouteResultsMethods {
 
             Long capacity = elementList.stream().mapToLong(POJAZD::getPojemnoscLadowni).sum();
             System.out.println(capacity + " " + load);
-            if(capacity > load && elementList.size() <= driversCount)
+            if(capacity >= load && elementList.size() <= driversCount)
             res.add(elementList);
         }
         return res;

@@ -45,5 +45,9 @@
          </font>
       </Label>
       <RadioButton fx:id="isDriverRadioBttn" layoutX="554.0" layoutY="361.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="187.0" text="Kierowca" />
+      <Label fx:id="expPeselLbl" layoutX="777.0" layoutY="201.0" prefHeight="21.0" prefWidth="235.0" text="Spodziewany format: 11 cyfr" textFill="#f50000" visible="false" />
+      <Label fx:id="expWageLbl" layoutX="777.0" layoutY="252.0" prefHeight="21.0" prefWidth="301.0" text="Spodziewany Format: 12/12.3/12.34" textFill="RED" visible="false" />
+      <Label fx:id="expNameLbl" layoutX="777.0" layoutY="107.0" prefHeight="21.0" prefWidth="301.0" text="Spodziewany Format: np. &quot;Jan&quot;, &quot;Karol&quot;" textFill="RED" visible="false" />
+      <Label fx:id="expSurnameLbl" layoutX="777.0" layoutY="154.0" prefHeight="21.0" prefWidth="281.0" text="Spodziewany Format: np &quot;Kowalski&quot;" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

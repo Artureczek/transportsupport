@@ -69,6 +69,9 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
     @FXML
     private Button backBttn;
 
+    @FXML
+    private Label expLoadLbl;
+
     ScreensController myController;
     final ToggleGroup group = new ToggleGroup();
 
@@ -94,11 +97,22 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
         prioCostBttn.setToggleGroup(group);
         prioTimeBttn.setToggleGroup(group);
 
+        sizeTxtFld.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (!sizeTxtFld.getText().matches("^\\d+$")) {
+                    expLoadLbl.setVisible(true);
+                }
+                else{
+                    expLoadLbl.setVisible(false);
+                }
+            }
+        });
+
         showBttn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
+                selectRoute(fromTextField.getText(),toTextField.getText());
                 sizeTxtFld.setDisable(false);
-                selectRoute();
             }
         });
 
@@ -125,14 +139,16 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
 
         backBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) { myController.setScreen(Main.ROUTEMENU); } });
         continueBttn.setOnAction(new EventHandler<ActionEvent>() { @Override public void handle(ActionEvent arg0) {
-            setWorkerList();
-            myController.setScreen(Main.SELECTSTAFF);
-            startLocation = fromTextField.getText();
-            endLocation = toTextField.getText();
-            distance = Double.valueOf(distanceLabel.getText().replace(" km", "").replace("Odleglosc: ", "").replace(" ",""));
-            priorytet = ((RadioButton) group.getSelectedToggle()).getText();
-            objetosc = Integer.valueOf(sizeTxtFld.getText());
-            System.out.println(startLocation + " " + endLocation + " " + priorytet);
+
+            if(!expLoadLbl.isVisible()) {
+                setWorkerList();
+                myController.setScreen(Main.SELECTSTAFF);
+                startLocation = fromTextField.getText();
+                endLocation = toTextField.getText();
+                priorytet = ((RadioButton) group.getSelectedToggle()).getText();
+                objetosc = Integer.valueOf(sizeTxtFld.getText());
+                System.out.println(startLocation + " " + endLocation + " " + priorytet);
+            }
 
         } });
 
@@ -169,13 +185,12 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
 
     }
 
-    public void selectRoute() {
+    public void selectRoute(String from, String to) {
         ds = new DirectionsService();
 
         try {
             dr = new DirectionsRequest(
-                    fromTextField.getText(),
-                    toTextField.getText(),
+                    from, to,
                     TravelModes.DRIVING
             );
 
@@ -191,6 +206,11 @@ public class SelectRouteController implements Initializable, ControlledScreen, M
 
     @Override
     public void directionsReceived(DirectionsResult directionsResult, DirectionStatus directionStatus) {
+
+        List<DirectionsRoute> lista = directionsResult.getRoutes();
+        List<DirectionsLeg> lista2 = lista.get(0).getLegs();
+        distance = lista2.get(0).getDistance().getValue()/1000;
+        distanceLabel.setText( "Odleglosc: " + lista2.get(0).getDistance().getText());
 
     }
 

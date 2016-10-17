@@ -62,28 +62,88 @@ public class AddEmployeeController implements Initializable, ControlledScreen {
 
 	@FXML
 	private RadioButton isDriverRadioBttn;
+
+	@FXML
+	private Label expPeselLbl;
+
+	@FXML
+	private Label expWageLbl;
+
+	@FXML
+	private Label expNameLbl;
+
+	@FXML
+	private Label expSurnameLbl;
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		// TODO Auto-generated method stub
-		
+
+		nameTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue) {
+				if (!nameTextField.getText().matches("^[A-ZŻŹĆĄŚĘŁÓŃ][a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$")) {
+					expNameLbl.setVisible(true);
+				}
+				else{
+					expNameLbl.setVisible(false);
+				}
+			}
+		});
+		surnameTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue) {
+				if (!surnameTextField.getText().matches("^[A-ZŻŹĆĄŚĘŁÓŃ][a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ]+$")) {
+					expSurnameLbl.setVisible(true);
+				}
+				else{
+					expSurnameLbl.setVisible(false);
+				}
+			}
+		});
+
+		peselTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue) {
+				if (!peselTextField.getText().matches("^\\d{11}$")) {
+					expPeselLbl.setVisible(true);
+				}
+				else{
+					expPeselLbl.setVisible(false);
+				}
+			}
+		});
+
+		salaryTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue) {
+				if (!salaryTextField.getText().matches("[0-9]+(\\.[0-9][0-9]?)?")) {
+					expWageLbl.setVisible(true);
+				}
+				else{
+					expWageLbl.setVisible(false);
+				}
+			}
+		});
+
+
+
+
 		continueButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 	        @Override
 	        public void handle(ActionEvent arg0) 
 	        {
-	        	Instant instant = Instant.from(birthDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
-				Date date = Date.from(instant);
-				PRACOWNIK pracownik = new PRACOWNIK(nameTextField.getText(), surnameTextField.getText(), peselTextField.getText(),
-						Long.valueOf(salaryTextField.getText()), date, isDriverRadioBttn.isSelected() , Main.activeUserEntity);
+				if(!expNameLbl.isVisible() && !expPeselLbl.isVisible() && !expSurnameLbl.isVisible() && !expWageLbl.isVisible()) {
+					Instant instant = Instant.from(birthDatePicker.getValue().atStartOfDay(ZoneId.systemDefault()));
+					Date date = Date.from(instant);
+					PRACOWNIK pracownik = new PRACOWNIK(nameTextField.getText(), surnameTextField.getText(), peselTextField.getText(),
+							Long.valueOf(salaryTextField.getText()), date, isDriverRadioBttn.isSelected(), Main.activeUserEntity);
 
-				 boolean result = AddEmployeeMethods.Validate(pracownik);
-	        	 
-	        	 if(result)
-	        	 myController.setScreen(Main.EMPLOYEEPARTA); 
-	        	 else
-	        	 incorrectLabel.setVisible(true);
+					boolean result = AddEmployeeMethods.Validate(pracownik);
+
+					if (result)
+						myController.setScreen(Main.EMPLOYEEPARTA);
+					else
+						incorrectLabel.setVisible(true);
+				}
 	        }
 	    });
 		

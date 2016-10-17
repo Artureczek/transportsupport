@@ -1,5 +1,6 @@
 package com.mkyong.controllers;
 
+import com.mkyong.controlMethods.ViewRoutesMethods;
 import com.mkyong.main.Main;
 import com.mkyong.transport.TRASA;
 import com.mkyong.transport.TRASAPOJAZD;
@@ -109,6 +110,31 @@ public class ViewRoutesController implements Initializable, ControlledScreen  {
             }
         });
 
+        deleteBttn.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent arg0)
+            {
+                if(selectedTrasa!=null) {
+                    ViewRoutesMethods.deleteRoute(selectedTrasa);
+                    RouteMenuController.setRoutesList();
+                    if(routesListView.getItems().size()==0){
+
+                        startLbl.setText("Lokacja Startowa: ");
+                        endLbl.setText("Lokacja Koncowa: ");
+                        distanceLbl.setText("Odleglosc: ");
+                        prioLbl.setText("Priorytet Trasy: ");
+                        fuelCostLbl.setText("Koszt Paliwa: ");
+                        driversListView.setItems(null);
+                        carsListView.setItems(null);
+
+
+                    }
+                }
+            }
+        });
+
+
         backBttn.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
@@ -123,6 +149,9 @@ public class ViewRoutesController implements Initializable, ControlledScreen  {
             @Override
             public void handle(ActionEvent arg0)
             {
+                ViewRoutesMapController.from = selectedTrasa.getLokacjaStartowa();
+                ViewRoutesMapController.to = selectedTrasa.getLokacjaKoncowa();
+                //ViewRoutesMapController.selectRouteController.selectRoute(ViewRoutesMapController.from, ViewRoutesMapController.to);
                 myController.setScreen(Main.VIEWROUTESMAP);
             }
         });
